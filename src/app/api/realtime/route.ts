@@ -7,17 +7,21 @@ export async function GET() {
   const encoder = new TextEncoder();
 
   const stream = new ReadableStream({
-    start(controller) {
+    async start(controller) {
       // Send initial state snapshot immediately upon connection
-      const initialState = db.getEventState();
-      controller.enqueue(
-        encoder.encode(`data: ${JSON.stringify({ type: 'INIT', state: initialState })}\n\n`)
-      );
+      try {
+        const initialState = await db.getEventState();
+        controller.enqueue(
+          encoder.encode(`data: ${JSON.stringify({ type: 'INIT', state: initialState })}\n\n`)
+        );
+      } catch (e) {
+        console.error('Error fetching initial SSE state:', e);
+      }
 
       // Listener for server state change events
-      const onStateUpdate = (payload: any) => {
+      const onStateUpdate = async (payload: any) => {
         try {
-          const currentState = db.getEventState();
+          const currentState = await db.getEventState();
           controller.enqueue(
             encoder.encode(`data: ${JSON.stringify({ type: 'UPDATE', payload, state: currentState })}\n\n`)
           );
@@ -29,9 +33,9 @@ export async function GET() {
       realtimeBus.on('state_update', onStateUpdate);
 
       // Heartbeat timer every 5 seconds to keep connection alive & push decaying prize updates
-      const heartbeatInterval = setInterval(() => {
+      const heartbeatInterval = setInterval(async () => {
         try {
-          const state = db.getEventState();
+          const state = await db.getEventState();
           controller.enqueue(
             encoder.encode(`data: ${JSON.stringify({ type: 'TICK', state })}\n\n`)
           );

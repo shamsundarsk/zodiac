@@ -25,9 +25,11 @@ export async function POST(request: Request) {
     if (action === 'START_ROUND_01' || action === 'RESUME_ROUND_01') {
       newState = await db.updateEventState({
         round1_status: 'ACTIVE',
+        round2_status: 'LOCKED',
         round1_start_time: new Date(now).toISOString()
       });
       await db.logAudit('ADMIN', action, 'Round 01 started/resumed by admin.');
+
     } else if (action === 'PAUSE_ROUND_01') {
       let accumulated = currentState.round1_paused_elapsed_sec || 0;
       if (currentState.round1_status === 'ACTIVE' && currentState.round1_start_time) {
@@ -45,10 +47,12 @@ export async function POST(request: Request) {
       await db.logAudit('ADMIN', 'END_ROUND_01', 'Round 01 ended by admin.');
     } else if (action === 'START_ROUND_02' || action === 'RESUME_ROUND_02') {
       newState = await db.updateEventState({
+        round1_status: 'ENDED',
         round2_status: 'ACTIVE',
         round2_start_time: new Date(now).toISOString()
       });
       await db.logAudit('ADMIN', action, 'Round 02 started/resumed by admin. Prize decay active.');
+
     } else if (action === 'PAUSE_ROUND_02') {
       let accumulated = currentState.round2_paused_elapsed_sec || 0;
       if (currentState.round2_status === 'ACTIVE' && currentState.round2_start_time) {

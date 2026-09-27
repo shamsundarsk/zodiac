@@ -177,10 +177,19 @@ export const db = {
         ...updates,
         updated_at: new Date().toISOString()
       };
+      const { data: existingRows } = await supabaseAdmin.from('event_state').select('id').limit(1);
+      const targetId = existingRows?.[0]?.id || 'evt-001';
+
+      console.log('[DB UPDATE_EVENT_STATE]', { targetId, payload });
+
       const { error } = await supabaseAdmin
         .from('event_state')
         .update(payload)
-        .eq('id', 'evt-001');
+        .eq('id', targetId);
+
+      if (error) {
+        console.error('[SUPABASE EVENT_STATE UPDATE ERROR]', error);
+      }
 
       if (error && process.env.NODE_ENV === 'production') {
         throw new Error(`Supabase update error for event_state: ${error.message}`);
@@ -189,6 +198,8 @@ export const db = {
       if (!error) {
         return await this.getEventState();
       }
+
+
     }
 
     const data = loadData();
@@ -377,10 +388,24 @@ export const db = {
     };
 
     if (isSupabaseConfigured && supabaseAdmin) {
-      const { data, error } = await supabaseAdmin.from('submissions').insert(newSub).select().single();
-      if (data && !error) return data as Submission;
+      const { breakdown, original_score, override_score, override_reason, ...supabasePayload } = newSub;
+      const { data, error } = await supabaseAdmin.from('submissions').insert(supabasePayload).select().single();
+      if (data && !error) {
+        const fullSub: Submission = {
+          ...(data as Submission),
+          breakdown,
+          original_score,
+          override_score,
+          override_reason
+        };
+        // Also keep local JSON store updated
+        const localData = loadData();
+        localData.submissions.push(fullSub);
+        saveData(localData);
+        return fullSub;
+      }
       if (error && process.env.NODE_ENV === 'production') {
-        throw new Error(`Supabase insert submission error: ${error.message}`);
+        console.error('Supabase insert submission error fallback:', error.message);
       }
     }
 
@@ -388,6 +413,43 @@ export const db = {
     data.submissions.push(newSub);
     saveData(data);
     return newSub;
+  },
+
+  async updateSubmissionScore(submissionId: string, overrideScore: number, overrideReason?: string): Promise<Submission | null> {
+    if (isSupabaseConfigured && supabaseAdmin) {
+      const { data, error } = await supabaseAdmin
+        .from('submissions')
+        .update({ score: overrideScore })
+        .eq('id', submissionId)
+        .select()
+        .single();
+      
+      const localData = loadData();
+      const sub = localData.submissions.find(s => s.id === submissionId);
+      if (sub) {
+        if (sub.original_score === undefined) sub.original_score = sub.score;
+        sub.override_score = overrideScore;
+        sub.override_reason = overrideReason || '';
+        sub.score = overrideScore;
+        saveData(localData);
+        return sub;
+      }
+      if (data && !error) return { ...(data as Submission), override_score: overrideScore, override_reason: overrideReason };
+    }
+
+    const data = loadData();
+    const sub = data.submissions.find(s => s.id === submissionId);
+    if (sub) {
+      if (sub.original_score === undefined) {
+        sub.original_score = sub.score;
+      }
+      sub.override_score = overrideScore;
+      sub.override_reason = overrideReason || '';
+      sub.score = overrideScore;
+      saveData(data);
+      return sub;
+    }
+    return null;
   },
 
   async logAudit(team_code: string, action: string, details: string): Promise<AuditLog> {

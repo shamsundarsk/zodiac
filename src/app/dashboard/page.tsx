@@ -10,7 +10,7 @@ import { RoundTimer } from '@/components/timer/RoundTimer';
 import { Terminal, LogOut, Send, CheckCircle2, AlertTriangle, FileSearch, Lock, Users, HelpCircle, X, KeyRound, Edit3, FileText } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ZodiacCipherTransition } from '@/components/animation/ZodiacCipherTransition';
-import { ROUND_1_QUESTIONS, ROUND_2_QUESTIONS } from '@/lib/questions-data';
+import { QuestionItem } from '@/lib/questions-data';
 
 export default function ParticipantDashboard() {
   const router = useRouter();
@@ -25,6 +25,14 @@ export default function ParticipantDashboard() {
   const [hintModalOpen, setHintModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  // Dynamic Question State (Loaded from server /api/questions for assigned case)
+  const [questions, setQuestions] = useState<QuestionItem[]>([]);
+  const [questionsLoading, setQuestionsLoading] = useState(true);
+  const [questionsError, setQuestionsError] = useState<string | null>(null);
+
+  // Active question index for Round 2 compact navigation [1]..[12]
+  const [activeQIndex, setActiveQIndex] = useState<number>(0);
+
   // Scratchpad state for participant working notes
   const [scratchpadNotes, setScratchpadNotes] = useState<string>('');
 
@@ -34,7 +42,7 @@ export default function ParticipantDashboard() {
   const [r1Message, setR1Message] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   // Round 2 Submission State (12 Questions)
-  const [r2Answers, setR2Answers] = useState<Record<string, string>>({});
+  const [r2Answers, setR2Answers] = useState<Record<string, any>>({});
   const [r2Submitting, setR2Submitting] = useState(false);
   const [r2Locked, setR2Locked] = useState(false);
   const [r2Message, setR2Message] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
@@ -43,8 +51,44 @@ export default function ParticipantDashboard() {
     setR1Answers(prev => ({ ...prev, [key]: val }));
   };
 
-  const handleR2AnswerChange = (key: string, val: string) => {
-    setR2Answers(prev => ({ ...prev, [key]: val }));
+  const handleR2AnswerChange = (key: string, val: any) => {
+    setR2Answers(prev => {
+      const updated = { ...prev, [key]: val };
+      if (team) {
+        sessionStorage.setItem(`r2_draft_${team.team_code}`, JSON.stringify(updated));
+      }
+      return updated;
+    });
+  };
+
+  const handleR2MultiSelectToggle = (qid: string, option: string, maxSelect = 3) => {
+    setR2Answers((prev) => {
+      const current = prev[qid];
+      let selectedList: string[] = [];
+      if (Array.isArray(current)) {
+        selectedList = [...current];
+      } else if (typeof current === 'string' && current.length > 0) {
+        try {
+          selectedList = JSON.parse(current);
+        } catch {
+          selectedList = current.split(',').map((s: string) => s.trim());
+        }
+      }
+
+      if (selectedList.includes(option)) {
+        selectedList = selectedList.filter(o => o !== option);
+      } else {
+        if (selectedList.length < maxSelect) {
+          selectedList.push(option);
+        }
+      }
+
+      const updated = { ...prev, [qid]: selectedList };
+      if (team) {
+        sessionStorage.setItem(`r2_draft_${team.team_code}`, JSON.stringify(updated));
+      }
+      return updated;
+    });
   };
 
   // Initialize team & Realtime SSE Stream
@@ -58,19 +102,26 @@ export default function ParticipantDashboard() {
     const teamObj: Team = JSON.parse(cachedTeam);
     setTeam(teamObj);
 
-    // Load saved scratchpad from session if any
+    // Load saved scratchpad & Round 2 draft from session if any
     const savedNotes = sessionStorage.getItem(`scratchpad_${teamObj.team_code}`);
     if (savedNotes) setScratchpadNotes(savedNotes);
+
+    const savedR2Draft = sessionStorage.getItem(`r2_draft_${teamObj.team_code}`);
+    if (savedR2Draft) {
+      try {
+        setR2Answers(JSON.parse(savedR2Draft));
+      } catch (e) {}
+    }
 
     // Fetch initial state & folders for assigned case
     const initData = async () => {
       try {
-        const stateRes = await fetch('/api/event/status');
+        const stateRes = await fetch('/api/event/status', { cache: 'no-store' });
         const stateData = await stateRes.json();
         if (stateData.state) setEventState(stateData.state);
 
         const currentRound = stateData.state?.round2_status === 'ACTIVE' ? 2 : 1;
-        const foldersRes = await fetch(`/api/cases?round=${currentRound}&team_code=${teamObj.team_code}`);
+        const foldersRes = await fetch(`/api/cases?round=${currentRound}&team_code=${teamObj.team_code}`, { cache: 'no-store' });
         const foldersData = await foldersRes.json();
         if (foldersData.folders) {
           setFolders(foldersData.folders);
@@ -123,21 +174,54 @@ export default function ParticipantDashboard() {
 
   useEffect(() => {
     if (!team) return;
-    const fetchRoundFolders = async () => {
-      const res = await fetch(`/api/cases?round=${activeRound}&team_code=${team.team_code}`);
-      const data = await res.json();
-      if (data.folders) {
-        setFolders(data.folders);
-        if (data.folders.length > 0) {
-          setSelectedFolder(data.folders[0]);
+    const fetchRoundData = async () => {
+      setQuestionsLoading(true);
+      setQuestionsError(null);
+      setQuestions([]);
+      try {
+        const [foldersRes, questionsRes] = await Promise.all([
+          fetch(`/api/cases?round=${activeRound}&team_code=${team.team_code}`, { cache: 'no-store' }),
+          fetch(`/api/questions?round=${activeRound}`, { cache: 'no-store' })
+        ]);
+
+        const foldersData = await foldersRes.json();
+        if (foldersData.folders) {
+          setFolders(foldersData.folders);
+          if (foldersData.folders.length > 0) {
+            setSelectedFolder(foldersData.folders[0]);
+          }
         }
-      }
-      if (data.case) {
-        setCaseInfo(data.case);
+        if (foldersData.case) {
+          setCaseInfo(foldersData.case);
+        }
+
+        const qData = await questionsRes.json();
+        console.log('[ZODIAC UI QUESTIONS]', {
+          activeRound,
+          teamCode: team.team_code,
+          qSuccess: qData.success,
+          canonicalCase: qData.canonical_case,
+          assignedCase: qData.case_id,
+          count: qData.questions?.length,
+          firstQ: qData.questions?.[0]?.question || qData.questions?.[0]?.text
+        });
+
+        if (qData.success && qData.questions && qData.questions.length === 12) {
+          setQuestions(qData.questions);
+        } else {
+          setQuestions([]);
+          setQuestionsError(qData.message || 'Questions unavailable for assigned case');
+        }
+      } catch (err) {
+        setQuestions([]);
+        setQuestionsError('Questions unavailable for assigned case');
+      } finally {
+        setQuestionsLoading(false);
       }
     };
-    fetchRoundFolders();
+    fetchRoundData();
   }, [activeRound, team]);
+
 
   // Handle Scratchpad Note Saving
   const handleScratchpadChange = (val: string) => {
@@ -299,7 +383,7 @@ export default function ParticipantDashboard() {
       <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-0 overflow-hidden">
         {/* LEFT & CENTER: FOLDER EXPLORER & FILE MANAGER (7 Cols) */}
         <div className="lg:col-span-7 flex flex-col border-r border-zinc-800 bg-black">
-          <div className="px-6 py-3.5 bg-zinc-950 border-b border-zinc-800 flex items-center justify-between">
+          <div id="evidence-archive-header" className="px-6 py-3.5 bg-zinc-950 border-b border-zinc-800 flex items-center justify-between">
             <div>
               <h2 className="text-sm font-bold font-mono text-white flex items-center gap-2 uppercase tracking-wider">
                 <FileSearch className="w-4 h-4 text-white" />
@@ -414,9 +498,9 @@ export default function ParticipantDashboard() {
               <form onSubmit={handleRound1Submit} className="space-y-4 font-mono">
                 <div className="pb-2 border-b-2 border-black flex justify-between items-center">
                   <span className="text-xs font-black uppercase text-black tracking-wider">
-                    ROUND 01 CASE FINDINGS (12 QUESTIONS)
+                    ROUND 01 CASE FINDINGS ({questions.length} QUESTIONS)
                   </span>
-                  <span className="text-[10px] text-zinc-600 font-mono">MYSTERY AUTOMOBILE</span>
+                  <span className="text-[10px] text-zinc-600 font-mono">{assignedCaseId}</span>
                 </div>
 
                 {r1Message && (
@@ -434,37 +518,47 @@ export default function ParticipantDashboard() {
                   </div>
                 )}
 
-                <div className="space-y-3.5 max-h-[360px] overflow-y-auto pr-1">
-                  {ROUND_1_QUESTIONS.map((q) => (
-                    <div key={q.id}>
-                      <label className="block text-xs font-bold text-black mb-1 uppercase tracking-wider leading-snug">
-                        {q.question}
-                      </label>
-                      {q.type === 'textarea' ? (
-                        <textarea
-                          rows={2}
-                          value={r1Answers[q.id] || ''}
-                          onChange={(e) => handleR1AnswerChange(q.id, e.target.value)}
-                          placeholder={q.placeholder}
-                          className="w-full bg-white border-2 border-black px-3 py-2 text-xs font-mono text-black font-bold placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-black"
-                        />
-                      ) : (
-                        <input
-                          type="text"
-                          value={r1Answers[q.id] || ''}
-                          onChange={(e) => handleR1AnswerChange(q.id, e.target.value)}
-                          placeholder={q.placeholder}
-                          className="w-full bg-white border-2 border-black px-3 py-2 text-xs font-mono text-black font-bold placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-black"
-                        />
-                      )}
-                    </div>
-                  ))}
-                </div>
+                {questionsLoading ? (
+                  <div className="p-8 text-center text-xs font-mono font-bold text-zinc-600 animate-pulse">
+                    LOADING CASE QUESTIONS FOR {assignedCaseId}...
+                  </div>
+                ) : questionsError ? (
+                  <div className="p-4 border-2 border-red-800 bg-red-100 text-red-950 font-bold text-xs font-mono">
+                    {questionsError}
+                  </div>
+                ) : (
+                  <div className="space-y-3.5 max-h-[360px] overflow-y-auto pr-1">
+                    {questions.map((q, idx) => (
+                      <div key={q.id || `r1-q-${idx}`}>
+                        <label className="block text-xs font-bold text-black mb-1 uppercase tracking-wider leading-snug">
+                          Q{q.num || idx + 1}. {q.question || q.text}
+                        </label>
+                        {q.type === 'textarea' ? (
+                          <textarea
+                            rows={2}
+                            value={r1Answers[q.id] || ''}
+                            onChange={(e) => handleR1AnswerChange(q.id, e.target.value)}
+                            placeholder={q.placeholder || `Enter finding for Q${q.num || idx + 1}...`}
+                            className="w-full bg-white border-2 border-black px-3 py-2 text-xs font-mono text-black font-bold placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-black"
+                          />
+                        ) : (
+                          <input
+                            type="text"
+                            value={r1Answers[q.id] || ''}
+                            onChange={(e) => handleR1AnswerChange(q.id, e.target.value)}
+                            placeholder={q.placeholder || `Enter finding for Q${q.num || idx + 1}...`}
+                            className="w-full bg-white border-2 border-black px-3 py-2 text-xs font-mono text-black font-bold placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-black"
+                          />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
 
                 <button
                   type="submit"
-                  disabled={r1Submitting}
-                  className="w-full mt-3 py-3.5 bg-black hover:bg-zinc-800 text-white font-mono font-black text-xs transition-all flex items-center justify-center gap-2 cursor-pointer uppercase tracking-widest shadow-lg"
+                  disabled={r1Submitting || questionsLoading || !questions.length}
+                  className="w-full mt-3 py-3.5 bg-black hover:bg-zinc-800 text-white font-mono font-black text-xs transition-all flex items-center justify-center gap-2 cursor-pointer uppercase tracking-widest shadow-lg disabled:opacity-50"
                 >
                   <Send className="w-4 h-4" />
                   {r1Submitting ? 'VERIFYING FINDINGS...' : 'SUBMIT ROUND 01 FINDINGS'}
@@ -475,66 +569,245 @@ export default function ParticipantDashboard() {
             {/* ROUND 2 SUBMISSION FORM */}
             {activeRound === 2 && (
               <form onSubmit={handleRound2Submit} className="space-y-4 font-mono">
-                <div className="pb-2 border-b-2 border-black flex justify-between items-center">
+                <div className="pb-2 border-b-2 border-black flex justify-between items-center flex-wrap gap-2">
                   <span className="text-xs font-black uppercase text-black tracking-wider">
-                    ROUND 02 WAR ROOM (12 QUESTIONS)
+                    ROUND 02 WAR ROOM ({questions.length} QUESTIONS)
                   </span>
-                  <span className="text-[10px] text-zinc-600 font-mono">FINAL LOCK</span>
-                </div>
-
-                {r2Message && (
-                  <div className={`p-4 border-2 text-xs font-mono flex items-start gap-2.5 ${
-                    r2Message.type === 'success'
-                      ? 'bg-emerald-100 border-emerald-800 text-emerald-950 font-bold'
-                      : 'bg-red-100 border-red-800 text-red-950 font-bold'
-                  }`}>
-                    <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" />
-                    <span>{r2Message.text}</span>
-                  </div>
-                )}
-
-                <div className="space-y-3.5 max-h-[360px] overflow-y-auto pr-1">
-                  {ROUND_2_QUESTIONS.map((q) => (
-                    <div key={q.id}>
-                      <label className="block text-xs font-bold text-black mb-1 uppercase tracking-wider leading-snug">
-                        {q.question}
-                      </label>
-                      {q.type === 'textarea' ? (
-                        <textarea
-                          rows={2}
-                          disabled={r2Locked}
-                          value={r2Answers[q.id] || ''}
-                          onChange={(e) => handleR2AnswerChange(q.id, e.target.value)}
-                          placeholder={q.placeholder}
-                          className="w-full bg-white border-2 border-black px-3 py-2 text-xs font-mono text-black font-bold focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-50"
-                        />
-                      ) : (
-                        <input
-                          type="text"
-                          disabled={r2Locked}
-                          value={r2Answers[q.id] || ''}
-                          onChange={(e) => handleR2AnswerChange(q.id, e.target.value)}
-                          placeholder={q.placeholder}
-                          className="w-full bg-white border-2 border-black px-3 py-2 text-xs font-mono text-black font-bold focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-50"
-                        />
-                      )}
-                    </div>
-                  ))}
-                </div>
-
-                {!r2Locked ? (
                   <button
-                    type="submit"
-                    disabled={r2Submitting}
-                    className="w-full mt-3 py-3.5 bg-black hover:bg-zinc-800 text-white font-mono font-black text-xs transition-all flex items-center justify-center gap-2 cursor-pointer uppercase tracking-widest shadow-lg"
+                    type="button"
+                    onClick={() => {
+                      const el = document.getElementById('evidence-archive-header');
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="px-2.5 py-1 bg-black text-white hover:bg-zinc-800 text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 cursor-pointer"
                   >
-                    <Lock className="w-4 h-4" />
-                    {r2Submitting ? 'LOCKING PRIZE...' : 'LOCK FINAL ANSWER'}
+                    <FileSearch className="w-3 h-3 text-amber-400" />
+                    <span>VIEW EVIDENCE</span>
                   </button>
-                ) : (
-                  <div className="p-4 bg-black text-white border-2 border-black text-xs font-mono text-center font-bold">
-                    FINAL ANSWER LOCKED // PRIZE RECORDED
+                </div>
+
+                {questionsLoading ? (
+                  <div className="p-8 text-center text-xs font-mono font-bold text-zinc-600 animate-pulse">
+                    LOADING ROUND 2 WAR ROOM QUESTIONS FOR {assignedCaseId}...
                   </div>
+                ) : questionsError ? (
+                  <div className="p-4 border-2 border-red-800 bg-red-100 text-red-950 font-bold text-xs font-mono">
+                    {questionsError}
+                  </div>
+                ) : (
+                  <>
+                    {/* Compact Question Navigation [1] [2] .. [12] */}
+                    <div className="p-2 bg-black border-2 border-black text-xs font-mono">
+                      <div className="flex items-center justify-between mb-1.5 px-1">
+                        <span className="text-[10px] text-zinc-400 font-bold uppercase">QUESTION NAVIGATION</span>
+                        <span className="text-[10px] text-amber-400 font-bold">
+                          {Object.keys(r2Answers).filter(k => !k.endsWith('_evidence') && r2Answers[k] && (Array.isArray(r2Answers[k]) ? r2Answers[k].length > 0 : true)).length} / {questions.length} ANSWERED
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-6 sm:grid-cols-12 gap-1">
+                        {questions.map((q, idx) => {
+                          const qKey = q.id || `q${idx + 1}`;
+                          const isAnswered = r2Answers[qKey] !== undefined && r2Answers[qKey] !== '' && (Array.isArray(r2Answers[qKey]) ? r2Answers[qKey].length > 0 : true);
+                          const isActive = activeQIndex === idx;
+                          return (
+                            <button
+                              type="button"
+                              key={qKey}
+                              onClick={() => {
+                                setActiveQIndex(idx);
+                                const el = document.getElementById(`r2-q-${idx}`);
+                                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                              }}
+                              className={`py-1.5 font-bold text-xs flex items-center justify-center transition-all cursor-pointer border ${
+                                isActive
+                                  ? 'bg-amber-400 text-black border-amber-400 font-black ring-2 ring-black scale-105'
+                                  : isAnswered
+                                  ? 'bg-emerald-950 text-emerald-300 border-emerald-700'
+                                  : 'bg-zinc-900 text-zinc-400 border-zinc-700 hover:text-white'
+                              }`}
+                            >
+                              {idx + 1}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {r2Message && (
+                      <div className={`p-3.5 border-2 text-xs font-mono flex items-start gap-2.5 ${
+                        r2Message.type === 'success'
+                          ? 'bg-emerald-100 border-emerald-800 text-emerald-950 font-bold'
+                          : 'bg-red-100 border-red-800 text-red-950 font-bold'
+                      }`}>
+                        <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" />
+                        <span>{r2Message.text}</span>
+                      </div>
+                    )}
+
+                    {/* Redesigned Compact Questions List */}
+                    <div className="space-y-3 max-h-[380px] overflow-y-auto pr-1">
+                      {questions.map((q, idx) => {
+                        const qKey = q.id || `q${idx + 1}`;
+                        const isActive = activeQIndex === idx;
+                        const qText = q.question || q.text || '';
+                        return (
+                          <div
+                            key={qKey}
+                            id={`r2-q-${idx}`}
+                            onClick={() => setActiveQIndex(idx)}
+                            className={`p-3 border-2 transition-all ${
+                              isActive
+                                ? 'border-black bg-white shadow-md'
+                                : 'border-zinc-300 bg-[#FAF9F5] hover:border-zinc-500'
+                            }`}
+                          >
+                            <label className="block text-xs font-bold text-black mb-1 uppercase tracking-wider leading-snug">
+                              Q{q.num || idx + 1}. {qText}
+                            </label>
+
+                            {/* Render input depending on type */}
+                            {q.type === 'PERCENTAGE' && (
+                              <div className="flex items-center gap-2 mt-1.5">
+                                <input
+                                  type="text"
+                                  disabled={r2Locked}
+                                  value={r2Answers[qKey] || ''}
+                                  onChange={(e) => handleR2AnswerChange(qKey, e.target.value)}
+                                  placeholder={q.placeholder || 'e.g. 5.5'}
+                                  className="w-40 bg-white border-2 border-black px-3 py-1.5 text-xs font-mono font-bold text-black focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-50"
+                                />
+                                <span className="font-mono font-black text-sm text-black">%</span>
+                              </div>
+                            )}
+
+                            {q.type === 'NUMBER' && (
+                              <div className="flex items-center gap-2 mt-1.5">
+                                <input
+                                  type="text"
+                                  disabled={r2Locked}
+                                  value={r2Answers[qKey] || ''}
+                                  onChange={(e) => handleR2AnswerChange(qKey, e.target.value)}
+                                  placeholder={q.placeholder || 'e.g. 0.79'}
+                                  className="w-40 bg-white border-2 border-black px-3 py-1.5 text-xs font-mono font-bold text-black focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-50"
+                                />
+                                {q.unit && <span className="font-mono font-bold text-xs text-black">{q.unit}</span>}
+                              </div>
+                            )}
+
+                            {q.type === 'CURRENCY' && (
+                              <div className="flex items-center gap-2 mt-1.5">
+                                <span className="font-mono font-black text-sm text-black">₹</span>
+                                <input
+                                  type="text"
+                                  disabled={r2Locked}
+                                  value={r2Answers[qKey] || ''}
+                                  onChange={(e) => handleR2AnswerChange(qKey, e.target.value)}
+                                  placeholder={q.placeholder || 'Amount...'}
+                                  className="w-48 bg-white border-2 border-black px-3 py-1.5 text-xs font-mono font-bold text-black focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-50"
+                                />
+                              </div>
+                            )}
+
+                            {q.type === 'CODE' && (
+                              <div className="mt-1.5">
+                                <input
+                                  type="text"
+                                  disabled={r2Locked}
+                                  value={r2Answers[qKey] || ''}
+                                  onChange={(e) => handleR2AnswerChange(qKey, e.target.value.toUpperCase())}
+                                  placeholder={q.placeholder || 'e.g. TLE-02'}
+                                  className="w-48 uppercase bg-white border-2 border-black px-3 py-1.5 text-xs font-mono font-bold text-black focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-50 tracking-wider"
+                                />
+                              </div>
+                            )}
+
+                            {(q.type === 'PERSON' || q.type === 'COMPANY' || q.type === 'LOCATION' || q.type === 'SHORT_TEXT' || q.type === 'DATE' || q.type === 'text') && (
+                              <div className="mt-1.5">
+                                <input
+                                  type="text"
+                                  disabled={r2Locked}
+                                  value={r2Answers[qKey] || ''}
+                                  onChange={(e) => handleR2AnswerChange(qKey, e.target.value)}
+                                  placeholder={q.placeholder || 'Short answer...'}
+                                  className="w-full max-w-xs bg-white border-2 border-black px-3 py-1.5 text-xs font-mono font-bold text-black focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-50"
+                                />
+                              </div>
+                            )}
+
+                            {q.type === 'MULTI_SELECT' && (
+                              <div className="space-y-2 border border-black p-3 bg-white mt-1.5">
+                                <div className="text-[11px] font-bold text-black uppercase tracking-wider mb-1">
+                                  Select THREE evidence-backed weaknesses:
+                                </div>
+                                <div className="grid grid-cols-1 gap-1.5">
+                                  {q.options?.map((opt) => {
+                                    const selectedOpts = Array.isArray(r2Answers[qKey])
+                                      ? r2Answers[qKey]
+                                      : (typeof r2Answers[qKey] === 'string' ? r2Answers[qKey].split(',').map((s: string) => s.trim()) : []);
+                                    const isChecked = selectedOpts.includes(opt);
+                                    return (
+                                      <label key={opt} className={`flex items-center gap-2.5 p-2 border border-black cursor-pointer text-xs font-mono font-bold transition-all ${
+                                        isChecked ? 'bg-black text-white' : 'bg-[#FAF9F5] text-black hover:bg-zinc-100'
+                                      }`}>
+                                        <input
+                                          type="checkbox"
+                                          disabled={r2Locked}
+                                          checked={isChecked}
+                                          onChange={() => handleR2MultiSelectToggle(qKey, opt, q.maxSelect || 3)}
+                                          className="w-4 h-4 accent-black cursor-pointer"
+                                        />
+                                        <span>{opt}</span>
+                                      </label>
+                                    );
+                                  })}
+                                </div>
+                                <div className="mt-3 pt-2 border-t border-zinc-300">
+                                  <label className="text-[10px] font-bold text-zinc-600 block mb-1">Evidence / metric (optional, max 300 chars):</label>
+                                  <textarea
+                                    rows={2}
+                                    maxLength={300}
+                                    disabled={r2Locked}
+                                    value={r2Answers[`${qKey}_evidence`] || ''}
+                                    onChange={(e) => handleR2AnswerChange(`${qKey}_evidence`, e.target.value)}
+                                    placeholder="Optional short evidence quote..."
+                                    className="w-full bg-[#FAF9F5] border border-zinc-400 p-2 text-xs font-mono text-black focus:outline-none focus:border-black"
+                                  />
+                                </div>
+                              </div>
+                            )}
+
+                            {(q.type === 'OPEN_ENDED' || q.type === 'CHAIN' || q.type === 'textarea') && (
+                              <div className="mt-1.5">
+                                <textarea
+                                  rows={2}
+                                  disabled={r2Locked}
+                                  value={r2Answers[qKey] || ''}
+                                  onChange={(e) => handleR2AnswerChange(qKey, e.target.value)}
+                                  placeholder={q.placeholder || 'Answer...'}
+                                  className="w-full bg-white border-2 border-black px-3 py-2 text-xs font-mono text-black font-bold placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-50"
+                                />
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {!r2Locked ? (
+                      <button
+                        type="submit"
+                        disabled={r2Submitting || questionsLoading || !questions.length}
+                        className="w-full mt-3 py-3.5 bg-black hover:bg-zinc-800 text-white font-mono font-black text-xs transition-all flex items-center justify-center gap-2 cursor-pointer uppercase tracking-widest shadow-lg disabled:opacity-50"
+                      >
+                        <Lock className="w-4 h-4" />
+                        {r2Submitting ? 'LOCKING PRIZE...' : 'LOCK FINAL ANSWER'}
+                      </button>
+                    ) : (
+                      <div className="p-4 bg-black text-white border-2 border-black text-xs font-mono text-center font-bold">
+                        FINAL ANSWER LOCKED // PRIZE RECORDED
+                      </div>
+                    )}
+                  </>
                 )}
               </form>
             )}

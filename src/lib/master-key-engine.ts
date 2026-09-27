@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import * as XLSX from 'xlsx';
+import { getCanonicalCaseId, CanonicalCaseId } from './questions-engine';
 
 export interface MasterKeyQuestionItem {
   qid: string;
@@ -24,77 +25,39 @@ export interface MasterKeyDataset {
   solution_summary?: CaseSolutionSummary[];
 }
 
-const CASE_KEY_MAP: Record<string, { r1KeyFile: string; r2KeyFile: string; title: string }> = {
-  'case-r1-hyundai': {
+const CANONICAL_KEY_MAP: Record<CanonicalCaseId, { r1KeyFile: string; r2KeyFile: string; title: string }> = {
+  hyundai: {
     r1KeyFile: 'Hyundai_Deep_Investigation_MASTER_KEY.xlsx',
     r2KeyFile: 'Hyundai_Corporate_War_Room_Round2_MASTER_KEY.xlsx',
     title: 'Hyundai Motor Company Investigation'
   },
-  'case-r1-eternal': {
-    r1KeyFile: 'Eternal_Deep_Investigation_MASTER_KEY.xlsx',
-    r2KeyFile: 'Eternal_Corporate_War_Room_Round2_MASTER_KEY.xlsx',
-    title: 'Eternal Ltd (Zomato) Investigation'
-  },
-  'case-r1-dior': {
-    r1KeyFile: 'Dior_Deep_Investigation_MASTER_KEY.xlsx',
-    r2KeyFile: 'Dior_Corporate_War_Room_Round2_MASTER_KEY.xlsx',
-    title: 'Christian Dior House Investigation'
-  },
-  'case-r1-cf': {
-    r1KeyFile: 'CF_Internet_Company_MASTER_KEY.xlsx',
-    r2KeyFile: 'Cloudflare_Corporate_War_Room_Round2_MASTER_KEY.xlsx',
-    title: 'Cloudflare Inc Internet Investigation'
-  },
-  'case-01': {
-    r1KeyFile: 'Hyundai_Deep_Investigation_MASTER_KEY.xlsx',
-    r2KeyFile: 'Hyundai_Corporate_War_Room_Round2_MASTER_KEY.xlsx',
-    title: 'Hyundai Motor Company Investigation'
-  },
-  'case-02': {
+  eternal: {
     r1KeyFile: 'Eternal_Deep_Investigation_MASTER_KEY.xlsx',
     r2KeyFile: 'Eternal_Corporate_War_Room_Round2_MASTER_KEY.xlsx',
     title: 'Eternal Ltd Investigation'
   },
-  'case-03': {
+  dior: {
     r1KeyFile: 'Dior_Deep_Investigation_MASTER_KEY.xlsx',
     r2KeyFile: 'Dior_Corporate_War_Room_Round2_MASTER_KEY.xlsx',
     title: 'Christian Dior Investigation'
   },
-  'case-04': {
+  cloudflare: {
     r1KeyFile: 'CF_Internet_Company_MASTER_KEY.xlsx',
     r2KeyFile: 'Cloudflare_Corporate_War_Room_Round2_MASTER_KEY.xlsx',
     title: 'Cloudflare Inc Investigation'
-  },
-  'case-r2-01': {
-    r1KeyFile: 'Hyundai_Deep_Investigation_MASTER_KEY.xlsx',
-    r2KeyFile: 'Hyundai_Corporate_War_Room_Round2_MASTER_KEY.xlsx',
-    title: 'Hyundai War Room'
-  },
-  'case-r2-hyundai': {
-    r1KeyFile: 'Hyundai_Deep_Investigation_MASTER_KEY.xlsx',
-    r2KeyFile: 'Hyundai_Corporate_War_Room_Round2_MASTER_KEY.xlsx',
-    title: 'Hyundai War Room'
-  },
-  'case-r2-eternal': {
-    r1KeyFile: 'Eternal_Deep_Investigation_MASTER_KEY.xlsx',
-    r2KeyFile: 'Eternal_Corporate_War_Room_Round2_MASTER_KEY.xlsx',
-    title: 'Eternal War Room'
-  },
-  'case-r2-dior': {
-    r1KeyFile: 'Dior_Deep_Investigation_MASTER_KEY.xlsx',
-    r2KeyFile: 'Dior_Corporate_War_Room_Round2_MASTER_KEY.xlsx',
-    title: 'Dior War Room'
-  },
-  'case-r2-cloudflare': {
-    r1KeyFile: 'CF_Internet_Company_MASTER_KEY.xlsx',
-    r2KeyFile: 'Cloudflare_Corporate_War_Room_Round2_MASTER_KEY.xlsx',
-    title: 'Cloudflare War Room'
   }
 };
 
 export function loadMasterKeyForCase(caseId: string, roundNumber: 1 | 2): MasterKeyDataset | null {
-  const normCaseId = (caseId || 'case-r1-hyundai').toLowerCase();
-  const config = CASE_KEY_MAP[normCaseId] || CASE_KEY_MAP['case-r1-hyundai'];
+  const canonicalId = getCanonicalCaseId(caseId);
+  if (!canonicalId) {
+    console.error(`Unknown case ID for master key lookup: "${caseId}"`);
+    return null;
+  }
+
+  const config = CANONICAL_KEY_MAP[canonicalId];
+  if (!config) return null;
+
   const fileName = roundNumber === 1 ? config.r1KeyFile : config.r2KeyFile;
   const roundSubDir = roundNumber === 1 ? 'round_1' : 'round_2';
   const filePath = path.join(process.cwd(), 'case_folders', roundSubDir, fileName);
@@ -103,6 +66,7 @@ export function loadMasterKeyForCase(caseId: string, roundNumber: 1 | 2): Master
     console.error(`Master Key file not found at: ${filePath}`);
     return null;
   }
+
 
   try {
     const wb = XLSX.readFile(filePath);

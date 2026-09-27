@@ -102,9 +102,13 @@ export interface Submission {
   team_id: string;
   team_code: string;
   round_number: 1 | 2;
-  answers: Record<string, string>;
+  answers: Record<string, any>;
   is_correct: boolean;
   score?: number;
+  original_score?: number;
+  override_score?: number;
+  override_reason?: string;
+  breakdown?: any[];
   status: "PENDING" | "ACCEPTED" | "REJECTED";
   submitted_at: string;
   remaining_prize: number;

@@ -1,7 +1,7 @@
 {
   "eventState": {
     "id": "evt-001",
-    "round1_status": "NOT_STARTED",
+    "round1_status": "ACTIVE",
     "round1_start_time": null,
     "round1_duration_mins": 30,
     "round1_paused_elapsed_sec": 0,
@@ -11,7 +11,7 @@
     "round2_paused_elapsed_sec": 0,
     "starting_prize": 2000,
     "current_prize": 2000,
-    "updated_at": "2026-09-27T14:17:29.086Z"
+    "updated_at": "2026-09-27T17:58:05.151Z"
   },
   "teams": [
     {
@@ -31107,35 +31107,1443 @@
       ]
     }
   ],
-  "submissions": [],
+  "submissions": [
+    {
+      "id": "sub-1790525959984-1014",
+      "team_id": "299321e8-2dac-4b85-b2fb-904782462ea3",
+      "team_code": "TEAM-80801",
+      "round_number": 2,
+      "answers": {
+        "q1": "5.47%",
+        "q2": "0.79",
+        "q3": "Digital",
+        "q4": "Mahindra",
+        "q5": "Mass EV",
+        "q6": "TLE-02",
+        "q7": "46.25%",
+        "q8": "EV-35",
+        "q9": "Talegaon",
+        "q10": "16.46%",
+        "q11": "EV",
+        "q12": [
+          "Margin deterioration",
+          "Concentrated CAPEX",
+          "Underutilized capacity"
+        ]
+      },
+      "is_correct": true,
+      "score": 95,
+      "status": "ACCEPTED",
+      "remaining_prize": 1999,
+      "attempt_number": 1,
+      "time_taken_seconds": 1,
+      "submitted_at": "2026-09-27T16:19:19.984+00:00",
+      "breakdown": [],
+      "original_score": 0,
+      "override_score": 95,
+      "override_reason": "Manual bonus point awarded for excellent evidence notes."
+    }
+  ],
   "auditLogs": [
     {
-      "id": "log-1790518938917-9855",
-      "team_code": "TEAM-54037",
+      "id": "log-1790533334559-8259",
+      "team_code": "ADMIN",
       "action": "EXPLORE_ARCHIVE",
-      "details": "Browsing Round 01 file archive.",
-      "timestamp": "2026-09-27T14:22:18.917Z"
+      "details": "Browsing Round 02 file archive.",
+      "timestamp": "2026-09-27T18:22:14.559Z"
     },
     {
-      "id": "log-1790518938555-6201",
-      "team_code": "TEAM-54037",
-      "action": "EXPLORE_ARCHIVE",
-      "details": "Browsing Round 01 file archive.",
-      "timestamp": "2026-09-27T14:22:18.555Z"
+      "id": "log-1790533333224-7097",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_02",
+      "details": "Round 02 started/resumed by admin. Prize decay active.",
+      "timestamp": "2026-09-27T18:22:13.225Z"
     },
     {
-      "id": "log-1790518937691-3721",
-      "team_code": "TEAM-54037",
+      "id": "log-1790532258042-2461",
+      "team_code": "ADMIN",
+      "action": "RESET_EVENT",
+      "details": "Full event reset performed by admin.",
+      "timestamp": "2026-09-27T18:04:18.042Z"
+    },
+    {
+      "id": "log-1790532257834-1402",
+      "team_code": "SYSTEM",
+      "action": "EVENT_RESET",
+      "details": "Event reset by administrator.",
+      "timestamp": "2026-09-27T18:04:17.834Z"
+    },
+    {
+      "id": "log-1790532257533-1926",
+      "team_code": "ADMIN",
+      "action": "EXPLORE_ARCHIVE",
+      "details": "Browsing Round 01 file archive.",
+      "timestamp": "2026-09-27T18:04:17.533Z"
+    },
+    {
+      "id": "log-1790532256820-3066",
+      "team_code": "ADMIN",
+      "action": "RESET_EVENT",
+      "details": "Full event reset performed by admin.",
+      "timestamp": "2026-09-27T18:04:16.820Z"
+    },
+    {
+      "id": "log-1790532256628-4045",
+      "team_code": "SYSTEM",
+      "action": "EVENT_RESET",
+      "details": "Event reset by administrator.",
+      "timestamp": "2026-09-27T18:04:16.628Z"
+    },
+    {
+      "id": "log-1790532253357-6208",
+      "team_code": "ADMIN",
+      "action": "END_ROUND_02",
+      "details": "Round 02 ended by admin.",
+      "timestamp": "2026-09-27T18:04:13.357Z"
+    },
+    {
+      "id": "log-1790532250061-5991",
+      "team_code": "ADMIN",
+      "action": "EXPLORE_ARCHIVE",
+      "details": "Browsing Round 02 file archive.",
+      "timestamp": "2026-09-27T18:04:10.061Z"
+    },
+    {
+      "id": "log-1790532249326-2805",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_02",
+      "details": "Round 02 started/resumed by admin. Prize decay active.",
+      "timestamp": "2026-09-27T18:04:09.326Z"
+    },
+    {
+      "id": "log-1790532247646-3119",
+      "team_code": "ADMIN",
+      "action": "END_ROUND_01",
+      "details": "Round 01 ended by admin.",
+      "timestamp": "2026-09-27T18:04:07.646Z"
+    },
+    {
+      "id": "log-1790532247380-6578",
+      "team_code": "ADMIN",
+      "action": "END_ROUND_01",
+      "details": "Round 01 ended by admin.",
+      "timestamp": "2026-09-27T18:04:07.380Z"
+    },
+    {
+      "id": "log-1790532247136-2454",
+      "team_code": "ADMIN",
+      "action": "END_ROUND_01",
+      "details": "Round 01 ended by admin.",
+      "timestamp": "2026-09-27T18:04:07.136Z"
+    },
+    {
+      "id": "log-1790532246955-5063",
+      "team_code": "ADMIN",
+      "action": "END_ROUND_01",
+      "details": "Round 01 ended by admin.",
+      "timestamp": "2026-09-27T18:04:06.955Z"
+    },
+    {
+      "id": "log-1790532246484-1027",
+      "team_code": "ADMIN",
+      "action": "END_ROUND_01",
+      "details": "Round 01 ended by admin.",
+      "timestamp": "2026-09-27T18:04:06.484Z"
+    },
+    {
+      "id": "log-1790532242892-8204",
+      "team_code": "ADMIN",
+      "action": "ADMIN_LOGIN",
+      "details": "Administrator logged into the control panel.",
+      "timestamp": "2026-09-27T18:04:02.892Z"
+    },
+    {
+      "id": "log-1790532182772-2000",
+      "team_code": "TEAM-32193",
+      "action": "EXPLORE_ARCHIVE",
+      "details": "Browsing Round 01 file archive.",
+      "timestamp": "2026-09-27T18:03:02.772Z"
+    },
+    {
+      "id": "log-1790532182707-4966",
+      "team_code": "TEAM-32193",
+      "action": "EXPLORE_ARCHIVE",
+      "details": "Browsing Round 01 file archive.",
+      "timestamp": "2026-09-27T18:03:02.707Z"
+    },
+    {
+      "id": "log-1790532174611-1367",
+      "team_code": "TEAM-32193",
+      "action": "EXPLORE_ARCHIVE",
+      "details": "Browsing Round 01 file archive.",
+      "timestamp": "2026-09-27T18:02:54.611Z"
+    },
+    {
+      "id": "log-1790532174551-5876",
+      "team_code": "TEAM-32193",
+      "action": "EXPLORE_ARCHIVE",
+      "details": "Browsing Round 01 file archive.",
+      "timestamp": "2026-09-27T18:02:54.552Z"
+    },
+    {
+      "id": "log-1790532012513-5234",
+      "team_code": "TEAM-32193",
+      "action": "EXPLORE_ARCHIVE",
+      "details": "Browsing Round 01 file archive.",
+      "timestamp": "2026-09-27T18:00:12.513Z"
+    },
+    {
+      "id": "log-1790532011446-1059",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_01",
+      "details": "Round 01 started/resumed by admin.",
+      "timestamp": "2026-09-27T18:00:11.446Z"
+    },
+    {
+      "id": "log-1790532010696-5437",
+      "team_code": "TEAM-69006",
       "action": "PARTICIPANT_LOGIN",
-      "details": "Team TEAM-54037 authenticated successfully.",
-      "timestamp": "2026-09-27T14:22:17.698Z"
+      "details": "Team TEAM-69006 authenticated successfully.",
+      "timestamp": "2026-09-27T18:00:10.696Z"
     },
     {
-      "id": "log-1790518649300-4727",
-      "team_code": "TEAM-54037",
+      "id": "log-1790532010276-8073",
+      "team_code": "TEAM-87419",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-87419 authenticated successfully.",
+      "timestamp": "2026-09-27T18:00:10.276Z"
+    },
+    {
+      "id": "log-1790532009869-9872",
+      "team_code": "TEAM-59141",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-59141 authenticated successfully.",
+      "timestamp": "2026-09-27T18:00:09.869Z"
+    },
+    {
+      "id": "log-1790532009666-3456",
+      "team_code": "TEAM-32193",
+      "action": "EXPLORE_ARCHIVE",
+      "details": "Browsing Round 02 file archive.",
+      "timestamp": "2026-09-27T18:00:09.666Z"
+    },
+    {
+      "id": "log-1790532009425-3044",
+      "team_code": "TEAM-32193",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-32193 authenticated successfully.",
+      "timestamp": "2026-09-27T18:00:09.425Z"
+    },
+    {
+      "id": "log-1790532009217-8607",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_02",
+      "details": "Round 02 started/resumed by admin. Prize decay active.",
+      "timestamp": "2026-09-27T18:00:09.217Z"
+    },
+    {
+      "id": "log-1790532008494-6423",
+      "team_code": "TEAM-69006",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-69006 authenticated successfully.",
+      "timestamp": "2026-09-27T18:00:08.494Z"
+    },
+    {
+      "id": "log-1790532008094-4969",
+      "team_code": "TEAM-87419",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-87419 authenticated successfully.",
+      "timestamp": "2026-09-27T18:00:08.094Z"
+    },
+    {
+      "id": "log-1790532007658-6781",
+      "team_code": "TEAM-59141",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-59141 authenticated successfully.",
+      "timestamp": "2026-09-27T18:00:07.658Z"
+    },
+    {
+      "id": "log-1790532007492-3404",
+      "team_code": "TEAM-32193",
+      "action": "EXPLORE_ARCHIVE",
+      "details": "Browsing Round 01 file archive.",
+      "timestamp": "2026-09-27T18:00:07.492Z"
+    },
+    {
+      "id": "log-1790532007216-9496",
+      "team_code": "TEAM-32193",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-32193 authenticated successfully.",
+      "timestamp": "2026-09-27T18:00:07.217Z"
+    },
+    {
+      "id": "log-1790532006991-5816",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_01",
+      "details": "Round 01 started/resumed by admin.",
+      "timestamp": "2026-09-27T18:00:06.991Z"
+    },
+    {
+      "id": "log-1790532006466-8223",
+      "team_code": "ADMIN",
+      "action": "ADMIN_LOGIN",
+      "details": "Administrator logged into the control panel.",
+      "timestamp": "2026-09-27T18:00:06.466Z"
+    },
+    {
+      "id": "log-1790531996980-5136",
+      "team_code": "TEAM-32193",
+      "action": "EXPLORE_ARCHIVE",
+      "details": "Browsing Round 02 file archive.",
+      "timestamp": "2026-09-27T17:59:56.980Z"
+    },
+    {
+      "id": "log-1790531996452-8343",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_02",
+      "details": "Round 02 started/resumed by admin. Prize decay active.",
+      "timestamp": "2026-09-27T17:59:56.452Z"
+    },
+    {
+      "id": "log-1790531996033-8003",
+      "team_code": "TEAM-32193",
+      "action": "EXPLORE_ARCHIVE",
+      "details": "Browsing Round 01 file archive.",
+      "timestamp": "2026-09-27T17:59:56.033Z"
+    },
+    {
+      "id": "log-1790531995696-1051",
+      "team_code": "TEAM-32193",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-32193 authenticated successfully.",
+      "timestamp": "2026-09-27T17:59:55.696Z"
+    },
+    {
+      "id": "log-1790531995477-8726",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_01",
+      "details": "Round 01 started/resumed by admin.",
+      "timestamp": "2026-09-27T17:59:55.477Z"
+    },
+    {
+      "id": "log-1790531994538-5366",
+      "team_code": "ADMIN",
+      "action": "ADMIN_LOGIN",
+      "details": "Administrator logged into the control panel.",
+      "timestamp": "2026-09-27T17:59:54.538Z"
+    },
+    {
+      "id": "log-1790531919830-1029",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_02",
+      "details": "Round 02 started/resumed by admin. Prize decay active.",
+      "timestamp": "2026-09-27T17:58:39.830Z"
+    },
+    {
+      "id": "log-1790531919207-4863",
+      "team_code": "TEAM-32193",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-32193 authenticated successfully.",
+      "timestamp": "2026-09-27T17:58:39.207Z"
+    },
+    {
+      "id": "log-1790531918945-4659",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_01",
+      "details": "Round 01 started/resumed by admin.",
+      "timestamp": "2026-09-27T17:58:38.945Z"
+    },
+    {
+      "id": "log-1790531918344-4680",
+      "team_code": "ADMIN",
+      "action": "ADMIN_LOGIN",
+      "details": "Administrator logged into the control panel.",
+      "timestamp": "2026-09-27T17:58:38.344Z"
+    },
+    {
+      "id": "log-1790531896243-2337",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_02",
+      "details": "Round 02 started/resumed by admin. Prize decay active.",
+      "timestamp": "2026-09-27T17:58:16.243Z"
+    },
+    {
+      "id": "log-1790531895685-3472",
+      "team_code": "TEAM-32193",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-32193 authenticated successfully.",
+      "timestamp": "2026-09-27T17:58:15.685Z"
+    },
+    {
+      "id": "log-1790531895471-1331",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_01",
+      "details": "Round 01 started/resumed by admin.",
+      "timestamp": "2026-09-27T17:58:15.471Z"
+    },
+    {
+      "id": "log-1790531894919-1762",
+      "team_code": "ADMIN",
+      "action": "ADMIN_LOGIN",
+      "details": "Administrator logged into the control panel.",
+      "timestamp": "2026-09-27T17:58:14.919Z"
+    },
+    {
+      "id": "log-1790531852881-8448",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_02",
+      "details": "Round 02 started/resumed by admin. Prize decay active.",
+      "timestamp": "2026-09-27T17:57:32.881Z"
+    },
+    {
+      "id": "log-1790531852201-4614",
+      "team_code": "TEAM-32193",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-32193 authenticated successfully.",
+      "timestamp": "2026-09-27T17:57:32.201Z"
+    },
+    {
+      "id": "log-1790531851751-3686",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_01",
+      "details": "Round 01 started/resumed by admin.",
+      "timestamp": "2026-09-27T17:57:31.751Z"
+    },
+    {
+      "id": "log-1790531850798-5953",
+      "team_code": "ADMIN",
+      "action": "ADMIN_LOGIN",
+      "details": "Administrator logged into the control panel.",
+      "timestamp": "2026-09-27T17:57:30.798Z"
+    },
+    {
+      "id": "log-1790531737629-2132",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_02",
+      "details": "Round 02 started/resumed by admin. Prize decay active.",
+      "timestamp": "2026-09-27T17:55:37.629Z"
+    },
+    {
+      "id": "log-1790531736920-2009",
+      "team_code": "TEAM-32193",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-32193 authenticated successfully.",
+      "timestamp": "2026-09-27T17:55:36.920Z"
+    },
+    {
+      "id": "log-1790531736668-4210",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_01",
+      "details": "Round 01 started/resumed by admin.",
+      "timestamp": "2026-09-27T17:55:36.668Z"
+    },
+    {
+      "id": "log-1790531736065-6533",
+      "team_code": "ADMIN",
+      "action": "ADMIN_LOGIN",
+      "details": "Administrator logged into the control panel.",
+      "timestamp": "2026-09-27T17:55:36.065Z"
+    },
+    {
+      "id": "log-1790531692125-4835",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_02",
+      "details": "Round 02 started/resumed by admin. Prize decay active.",
+      "timestamp": "2026-09-27T17:54:52.125Z"
+    },
+    {
+      "id": "log-1790531691279-5774",
+      "team_code": "TEAM-32193",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-32193 authenticated successfully.",
+      "timestamp": "2026-09-27T17:54:51.279Z"
+    },
+    {
+      "id": "log-1790531691037-1309",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_01",
+      "details": "Round 01 started/resumed by admin.",
+      "timestamp": "2026-09-27T17:54:51.037Z"
+    },
+    {
+      "id": "log-1790531690431-1378",
+      "team_code": "ADMIN",
+      "action": "ADMIN_LOGIN",
+      "details": "Administrator logged into the control panel.",
+      "timestamp": "2026-09-27T17:54:50.431Z"
+    },
+    {
+      "id": "log-1790531655945-8413",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_01",
+      "details": "Round 01 started/resumed by admin.",
+      "timestamp": "2026-09-27T17:54:15.945Z"
+    },
+    {
+      "id": "log-1790531655386-6240",
+      "team_code": "TEAM-69006",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-69006 authenticated successfully.",
+      "timestamp": "2026-09-27T17:54:15.386Z"
+    },
+    {
+      "id": "log-1790531655003-2247",
+      "team_code": "TEAM-87419",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-87419 authenticated successfully.",
+      "timestamp": "2026-09-27T17:54:15.003Z"
+    },
+    {
+      "id": "log-1790531654622-9206",
+      "team_code": "TEAM-59141",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-59141 authenticated successfully.",
+      "timestamp": "2026-09-27T17:54:14.622Z"
+    },
+    {
+      "id": "log-1790531654218-8845",
+      "team_code": "TEAM-32193",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-32193 authenticated successfully.",
+      "timestamp": "2026-09-27T17:54:14.218Z"
+    },
+    {
+      "id": "log-1790531653882-8247",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_02",
+      "details": "Round 02 started/resumed by admin. Prize decay active.",
+      "timestamp": "2026-09-27T17:54:13.882Z"
+    },
+    {
+      "id": "log-1790531653317-8907",
+      "team_code": "TEAM-69006",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-69006 authenticated successfully.",
+      "timestamp": "2026-09-27T17:54:13.317Z"
+    },
+    {
+      "id": "log-1790531652898-8119",
+      "team_code": "TEAM-87419",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-87419 authenticated successfully.",
+      "timestamp": "2026-09-27T17:54:12.898Z"
+    },
+    {
+      "id": "log-1790531652235-4288",
+      "team_code": "TEAM-59141",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-59141 authenticated successfully.",
+      "timestamp": "2026-09-27T17:54:12.235Z"
+    },
+    {
+      "id": "log-1790531651690-9582",
+      "team_code": "TEAM-32193",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-32193 authenticated successfully.",
+      "timestamp": "2026-09-27T17:54:11.690Z"
+    },
+    {
+      "id": "log-1790531651397-2495",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_01",
+      "details": "Round 01 started/resumed by admin.",
+      "timestamp": "2026-09-27T17:54:11.397Z"
+    },
+    {
+      "id": "log-1790531650854-5302",
+      "team_code": "ADMIN",
+      "action": "ADMIN_LOGIN",
+      "details": "Administrator logged into the control panel.",
+      "timestamp": "2026-09-27T17:54:10.854Z"
+    },
+    {
+      "id": "log-1790531591203-2040",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_01",
+      "details": "Round 01 started/resumed by admin.",
+      "timestamp": "2026-09-27T17:53:11.203Z"
+    },
+    {
+      "id": "log-1790531590351-2604",
+      "team_code": "TEAM-69006",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-69006 authenticated successfully.",
+      "timestamp": "2026-09-27T17:53:10.353Z"
+    },
+    {
+      "id": "log-1790531589861-8436",
+      "team_code": "TEAM-87419",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-87419 authenticated successfully.",
+      "timestamp": "2026-09-27T17:53:09.861Z"
+    },
+    {
+      "id": "log-1790531589359-9444",
+      "team_code": "TEAM-59141",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-59141 authenticated successfully.",
+      "timestamp": "2026-09-27T17:53:09.359Z"
+    },
+    {
+      "id": "log-1790531588766-6234",
+      "team_code": "TEAM-32193",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-32193 authenticated successfully.",
+      "timestamp": "2026-09-27T17:53:08.766Z"
+    },
+    {
+      "id": "log-1790531588500-3000",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_02",
+      "details": "Round 02 started/resumed by admin. Prize decay active.",
+      "timestamp": "2026-09-27T17:53:08.500Z"
+    },
+    {
+      "id": "log-1790531587814-4426",
+      "team_code": "TEAM-69006",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-69006 authenticated successfully.",
+      "timestamp": "2026-09-27T17:53:07.814Z"
+    },
+    {
+      "id": "log-1790531587309-5114",
+      "team_code": "TEAM-87419",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-87419 authenticated successfully.",
+      "timestamp": "2026-09-27T17:53:07.309Z"
+    },
+    {
+      "id": "log-1790531586864-2226",
+      "team_code": "TEAM-59141",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-59141 authenticated successfully.",
+      "timestamp": "2026-09-27T17:53:06.864Z"
+    },
+    {
+      "id": "log-1790531586236-2439",
+      "team_code": "TEAM-32193",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-32193 authenticated successfully.",
+      "timestamp": "2026-09-27T17:53:06.236Z"
+    },
+    {
+      "id": "log-1790531585410-8317",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_01",
+      "details": "Round 01 started/resumed by admin.",
+      "timestamp": "2026-09-27T17:53:05.410Z"
+    },
+    {
+      "id": "log-1790531584700-4441",
+      "team_code": "ADMIN",
+      "action": "ADMIN_LOGIN",
+      "details": "Administrator logged into the control panel.",
+      "timestamp": "2026-09-27T17:53:04.700Z"
+    },
+    {
+      "id": "log-1790531540787-2743",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_01",
+      "details": "Round 01 started/resumed by admin.",
+      "timestamp": "2026-09-27T17:52:20.787Z"
+    },
+    {
+      "id": "log-1790531540199-4141",
+      "team_code": "TEAM-69006",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-69006 authenticated successfully.",
+      "timestamp": "2026-09-27T17:52:20.199Z"
+    },
+    {
+      "id": "log-1790531539787-4058",
+      "team_code": "TEAM-87419",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-87419 authenticated successfully.",
+      "timestamp": "2026-09-27T17:52:19.787Z"
+    },
+    {
+      "id": "log-1790531539402-9726",
+      "team_code": "TEAM-59141",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-59141 authenticated successfully.",
+      "timestamp": "2026-09-27T17:52:19.402Z"
+    },
+    {
+      "id": "log-1790531538984-7559",
+      "team_code": "TEAM-32193",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-32193 authenticated successfully.",
+      "timestamp": "2026-09-27T17:52:18.984Z"
+    },
+    {
+      "id": "log-1790531538765-8852",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_02",
+      "details": "Round 02 started/resumed by admin. Prize decay active.",
+      "timestamp": "2026-09-27T17:52:18.765Z"
+    },
+    {
+      "id": "log-1790531538026-7057",
+      "team_code": "TEAM-69006",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-69006 authenticated successfully.",
+      "timestamp": "2026-09-27T17:52:18.026Z"
+    },
+    {
+      "id": "log-1790531537592-1492",
+      "team_code": "TEAM-87419",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-87419 authenticated successfully.",
+      "timestamp": "2026-09-27T17:52:17.592Z"
+    },
+    {
+      "id": "log-1790531537197-6515",
+      "team_code": "TEAM-59141",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-59141 authenticated successfully.",
+      "timestamp": "2026-09-27T17:52:17.197Z"
+    },
+    {
+      "id": "log-1790531536719-8740",
+      "team_code": "TEAM-32193",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-32193 authenticated successfully.",
+      "timestamp": "2026-09-27T17:52:16.719Z"
+    },
+    {
+      "id": "log-1790531536291-1120",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_01",
+      "details": "Round 01 started/resumed by admin.",
+      "timestamp": "2026-09-27T17:52:16.291Z"
+    },
+    {
+      "id": "log-1790531535324-4197",
+      "team_code": "ADMIN",
+      "action": "ADMIN_LOGIN",
+      "details": "Administrator logged into the control panel.",
+      "timestamp": "2026-09-27T17:52:15.326Z"
+    },
+    {
+      "id": "log-1790530767564-9629",
+      "team_code": "TEAM-32193",
+      "action": "EXPLORE_ARCHIVE",
+      "details": "Browsing Round 02 file archive.",
+      "timestamp": "2026-09-27T17:39:27.564Z"
+    },
+    {
+      "id": "log-1790530767168-5479",
+      "team_code": "TEAM-32193",
+      "action": "EXPLORE_ARCHIVE",
+      "details": "Browsing Round 02 file archive.",
+      "timestamp": "2026-09-27T17:39:27.168Z"
+    },
+    {
+      "id": "log-1790530766962-9459",
+      "team_code": "TEAM-32193",
+      "action": "EXPLORE_ARCHIVE",
+      "details": "Browsing Round 01 file archive.",
+      "timestamp": "2026-09-27T17:39:26.962Z"
+    },
+    {
+      "id": "log-1790530766445-6581",
+      "team_code": "TEAM-32193",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-32193 authenticated successfully.",
+      "timestamp": "2026-09-27T17:39:26.445Z"
+    },
+    {
+      "id": "log-1790530661805-4881",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_01",
+      "details": "Round 01 started/resumed by admin.",
+      "timestamp": "2026-09-27T17:37:41.805Z"
+    },
+    {
+      "id": "log-1790530660911-4298",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_02",
+      "details": "Round 02 started/resumed by admin. Prize decay active.",
+      "timestamp": "2026-09-27T17:37:40.911Z"
+    },
+    {
+      "id": "log-1790530660183-2444",
+      "team_code": "TEAM-32193",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-32193 authenticated successfully.",
+      "timestamp": "2026-09-27T17:37:40.183Z"
+    },
+    {
+      "id": "log-1790530660064-5323",
+      "team_code": "TEAM-32193",
       "action": "TEAM_REGISTERED",
-      "details": "Team Test Investigators registered with members: Alice, Bob. Assigned case-r1-cf.",
-      "timestamp": "2026-09-27T14:17:29.300Z"
+      "details": "Team Test Team 7_1790530659881 registered with members: Member A7, Member B7. Assigned case-r1-cf.",
+      "timestamp": "2026-09-27T17:37:40.064Z"
+    },
+    {
+      "id": "log-1790530659822-4801",
+      "team_code": "TEAM-85745",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-85745 authenticated successfully.",
+      "timestamp": "2026-09-27T17:37:39.822Z"
+    },
+    {
+      "id": "log-1790530659707-9889",
+      "team_code": "TEAM-85745",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 6_1790530659598 registered with members: Member A6, Member B6. Assigned case-r1-hyundai.",
+      "timestamp": "2026-09-27T17:37:39.707Z"
+    },
+    {
+      "id": "log-1790530659531-5931",
+      "team_code": "TEAM-69006",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-69006 authenticated successfully.",
+      "timestamp": "2026-09-27T17:37:39.531Z"
+    },
+    {
+      "id": "log-1790530659327-6087",
+      "team_code": "TEAM-69006",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 5_1790530659205 registered with members: Member A5, Member B5. Assigned case-r1-eternal.",
+      "timestamp": "2026-09-27T17:37:39.327Z"
+    },
+    {
+      "id": "log-1790530659134-5053",
+      "team_code": "TEAM-61393",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-61393 authenticated successfully.",
+      "timestamp": "2026-09-27T17:37:39.134Z"
+    },
+    {
+      "id": "log-1790530658969-8552",
+      "team_code": "TEAM-61393",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 4_1790530658803 registered with members: Member A4, Member B4. Assigned case-r1-dior.",
+      "timestamp": "2026-09-27T17:37:38.969Z"
+    },
+    {
+      "id": "log-1790530658738-8575",
+      "team_code": "TEAM-45354",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-45354 authenticated successfully.",
+      "timestamp": "2026-09-27T17:37:38.738Z"
+    },
+    {
+      "id": "log-1790530658617-3902",
+      "team_code": "TEAM-45354",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 3_1790530658443 registered with members: Member A3, Member B3. Assigned case-r1-dior.",
+      "timestamp": "2026-09-27T17:37:38.617Z"
+    },
+    {
+      "id": "log-1790530658340-7636",
+      "team_code": "TEAM-59141",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-59141 authenticated successfully.",
+      "timestamp": "2026-09-27T17:37:38.340Z"
+    },
+    {
+      "id": "log-1790530658213-3561",
+      "team_code": "TEAM-59141",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 2_1790530658096 registered with members: Member A2, Member B2. Assigned case-r1-hyundai.",
+      "timestamp": "2026-09-27T17:37:38.213Z"
+    },
+    {
+      "id": "log-1790530658037-1007",
+      "team_code": "TEAM-87419",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-87419 authenticated successfully.",
+      "timestamp": "2026-09-27T17:37:38.037Z"
+    },
+    {
+      "id": "log-1790530657919-4520",
+      "team_code": "TEAM-87419",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 1_1790530657752 registered with members: Member A1, Member B1. Assigned case-r1-dior.",
+      "timestamp": "2026-09-27T17:37:37.919Z"
+    },
+    {
+      "id": "log-1790530657678-1916",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_01",
+      "details": "Round 01 started/resumed by admin.",
+      "timestamp": "2026-09-27T17:37:37.678Z"
+    },
+    {
+      "id": "log-1790530657423-3351",
+      "team_code": "ADMIN",
+      "action": "ADMIN_LOGIN",
+      "details": "Administrator logged into the control panel.",
+      "timestamp": "2026-09-27T17:37:37.423Z"
+    },
+    {
+      "id": "log-1790530623446-3093",
+      "team_code": "ADMIN",
+      "action": "ADMIN_LOGIN",
+      "details": "Administrator logged into the control panel.",
+      "timestamp": "2026-09-27T17:37:03.446Z"
+    },
+    {
+      "id": "log-1790530466597-3840",
+      "team_code": "ADMIN",
+      "action": "EXPLORE_ARCHIVE",
+      "details": "Browsing Round 02 file archive.",
+      "timestamp": "2026-09-27T17:34:26.597Z"
+    },
+    {
+      "id": "log-1790530466094-7247",
+      "team_code": "ADMIN",
+      "action": "EXPLORE_ARCHIVE",
+      "details": "Browsing Round 02 file archive.",
+      "timestamp": "2026-09-27T17:34:26.095Z"
+    },
+    {
+      "id": "log-1790530465748-7633",
+      "team_code": "ADMIN",
+      "action": "EXPLORE_ARCHIVE",
+      "details": "Browsing Round 01 file archive.",
+      "timestamp": "2026-09-27T17:34:25.748Z"
+    },
+    {
+      "id": "log-1790530370127-6762",
+      "team_code": "ADMIN",
+      "action": "EXPLORE_ARCHIVE",
+      "details": "Browsing Round 02 file archive.",
+      "timestamp": "2026-09-27T17:32:50.127Z"
+    },
+    {
+      "id": "log-1790530369598-7906",
+      "team_code": "ADMIN",
+      "action": "EXPLORE_ARCHIVE",
+      "details": "Browsing Round 02 file archive.",
+      "timestamp": "2026-09-27T17:32:49.598Z"
+    },
+    {
+      "id": "log-1790530369244-7967",
+      "team_code": "ADMIN",
+      "action": "EXPLORE_ARCHIVE",
+      "details": "Browsing Round 01 file archive.",
+      "timestamp": "2026-09-27T17:32:49.244Z"
+    },
+    {
+      "id": "log-1790530303159-2862",
+      "team_code": "ADMIN",
+      "action": "EXPLORE_ARCHIVE",
+      "details": "Browsing Round 02 file archive.",
+      "timestamp": "2026-09-27T17:31:43.159Z"
+    },
+    {
+      "id": "log-1790530259122-9341",
+      "team_code": "ADMIN",
+      "action": "EXPLORE_ARCHIVE",
+      "details": "Browsing Round 01 file archive.",
+      "timestamp": "2026-09-27T17:30:59.122Z"
+    },
+    {
+      "id": "log-1790529139872-4943",
+      "team_code": "ADMIN",
+      "action": "EXPLORE_ARCHIVE",
+      "details": "Browsing Round 02 file archive.",
+      "timestamp": "2026-09-27T17:12:19.872Z"
+    },
+    {
+      "id": "log-1790529139445-8705",
+      "team_code": "ADMIN",
+      "action": "EXPLORE_ARCHIVE",
+      "details": "Browsing Round 02 file archive.",
+      "timestamp": "2026-09-27T17:12:19.445Z"
+    },
+    {
+      "id": "log-1790529139380-2602",
+      "team_code": "ADMIN",
+      "action": "EXPLORE_ARCHIVE",
+      "details": "Browsing Round 01 file archive.",
+      "timestamp": "2026-09-27T17:12:19.380Z"
+    },
+    {
+      "id": "log-1790529113730-1397",
+      "team_code": "TEAM-76294",
+      "action": "TEAM_REGISTERED",
+      "details": "Team CF Team 10 registered with members: Alice, Bob. Assigned case-r1-cf.",
+      "timestamp": "2026-09-27T17:11:53.730Z"
+    },
+    {
+      "id": "log-1790529059335-9438",
+      "team_code": "TEAM-11081",
+      "action": "TEAM_REGISTERED",
+      "details": "Team CF Team 9 registered with members: Alice, Bob. Assigned case-r1-dior.",
+      "timestamp": "2026-09-27T17:10:59.335Z"
+    },
+    {
+      "id": "log-1790528996918-3640",
+      "team_code": "TEAM-96324",
+      "action": "TEAM_REGISTERED",
+      "details": "Team CF Team 8 registered with members: Alice, Bob. Assigned case-r1-hyundai.",
+      "timestamp": "2026-09-27T17:09:56.919Z"
+    },
+    {
+      "id": "log-1790528867304-5276",
+      "team_code": "TEAM-72007",
+      "action": "TEAM_REGISTERED",
+      "details": "Team CF Team 7 registered with members: Alice, Bob. Assigned case-r1-eternal.",
+      "timestamp": "2026-09-27T17:07:47.304Z"
+    },
+    {
+      "id": "log-1790528811621-2604",
+      "team_code": "TEAM-62974",
+      "action": "TEAM_REGISTERED",
+      "details": "Team CF Team 6 registered with members: Alice, Bob. Assigned case-r1-eternal.",
+      "timestamp": "2026-09-27T17:06:51.621Z"
+    },
+    {
+      "id": "log-1790528749184-6771",
+      "team_code": "TEAM-33157",
+      "action": "TEAM_REGISTERED",
+      "details": "Team CF Team 5 registered with members: Alice, Bob. Assigned case-r1-dior.",
+      "timestamp": "2026-09-27T17:05:49.184Z"
+    },
+    {
+      "id": "log-1790528693263-8023",
+      "team_code": "TEAM-81938",
+      "action": "TEAM_REGISTERED",
+      "details": "Team CF Team 4 registered with members: Alice, Bob. Assigned case-r1-dior.",
+      "timestamp": "2026-09-27T17:04:53.264Z"
+    },
+    {
+      "id": "log-1790528601454-7126",
+      "team_code": "TEAM-67565",
+      "action": "TEAM_REGISTERED",
+      "details": "Team CF Team 3 registered with members: Alice, Bob. Assigned case-r1-eternal.",
+      "timestamp": "2026-09-27T17:03:21.455Z"
+    },
+    {
+      "id": "log-1790528534760-3041",
+      "team_code": "TEAM-98418",
+      "action": "LOGIN_FAILED",
+      "details": "Invalid login attempt for code: TEAM-98418",
+      "timestamp": "2026-09-27T17:02:14.761Z"
+    },
+    {
+      "id": "log-1790528460082-8590",
+      "team_code": "TEAM-43164",
+      "action": "TEAM_REGISTERED",
+      "details": "Team CF Team 2 registered with members: Alice, Bob. Assigned case-r1-eternal.",
+      "timestamp": "2026-09-27T17:01:00.083Z"
+    },
+    {
+      "id": "log-1790528390830-8351",
+      "team_code": "TEAM-42853",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Cloudflare Test Team registered with members: Alice, Bob. Assigned case-r1-eternal.",
+      "timestamp": "2026-09-27T16:59:50.831Z"
+    },
+    {
+      "id": "log-1790528337176-4201",
+      "team_code": "TEAM-26375",
+      "action": "LOGIN_FAILED",
+      "details": "Invalid login attempt for code: TEAM-26375",
+      "timestamp": "2026-09-27T16:58:57.179Z"
+    },
+    {
+      "id": "log-1790528267105-8491",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_01",
+      "details": "Round 01 started/resumed by admin.",
+      "timestamp": "2026-09-27T16:57:47.105Z"
+    },
+    {
+      "id": "log-1790528266815-2507",
+      "team_code": "ADMIN",
+      "action": "EXPLORE_ARCHIVE",
+      "details": "Browsing Round 02 file archive.",
+      "timestamp": "2026-09-27T16:57:46.815Z"
+    },
+    {
+      "id": "log-1790528266219-4449",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_02",
+      "details": "Round 02 started/resumed by admin. Prize decay active.",
+      "timestamp": "2026-09-27T16:57:46.219Z"
+    },
+    {
+      "id": "log-1790528265397-6746",
+      "team_code": "TEAM-12856",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-12856 authenticated successfully.",
+      "timestamp": "2026-09-27T16:57:45.397Z"
+    },
+    {
+      "id": "log-1790528265293-1979",
+      "team_code": "TEAM-12856",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 13_1790528265181 registered with members: Member A13, Member B13. Assigned case-r1-eternal.",
+      "timestamp": "2026-09-27T16:57:45.293Z"
+    },
+    {
+      "id": "log-1790528265041-1225",
+      "team_code": "TEAM-49220",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-49220 authenticated successfully.",
+      "timestamp": "2026-09-27T16:57:45.041Z"
+    },
+    {
+      "id": "log-1790528264929-6533",
+      "team_code": "TEAM-49220",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 12_1790528264816 registered with members: Member A12, Member B12. Assigned case-r1-dior.",
+      "timestamp": "2026-09-27T16:57:44.929Z"
+    },
+    {
+      "id": "log-1790528264755-7354",
+      "team_code": "TEAM-45322",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-45322 authenticated successfully.",
+      "timestamp": "2026-09-27T16:57:44.755Z"
+    },
+    {
+      "id": "log-1790528264645-1041",
+      "team_code": "TEAM-45322",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 11_1790528264475 registered with members: Member A11, Member B11. Assigned case-r1-hyundai.",
+      "timestamp": "2026-09-27T16:57:44.645Z"
+    },
+    {
+      "id": "log-1790528264418-2491",
+      "team_code": "TEAM-26104",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-26104 authenticated successfully.",
+      "timestamp": "2026-09-27T16:57:44.418Z"
+    },
+    {
+      "id": "log-1790528264306-9938",
+      "team_code": "TEAM-26104",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 10_1790528264184 registered with members: Member A10, Member B10. Assigned case-r1-cf.",
+      "timestamp": "2026-09-27T16:57:44.306Z"
+    },
+    {
+      "id": "log-1790528264121-3470",
+      "team_code": "TEAM-20298",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-20298 authenticated successfully.",
+      "timestamp": "2026-09-27T16:57:44.121Z"
+    },
+    {
+      "id": "log-1790528263937-9772",
+      "team_code": "TEAM-20298",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 9_1790528263830 registered with members: Member A9, Member B9. Assigned case-r1-cf.",
+      "timestamp": "2026-09-27T16:57:43.937Z"
+    },
+    {
+      "id": "log-1790528263767-4686",
+      "team_code": "TEAM-33415",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-33415 authenticated successfully.",
+      "timestamp": "2026-09-27T16:57:43.767Z"
+    },
+    {
+      "id": "log-1790528263649-9694",
+      "team_code": "TEAM-33415",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 8_1790528263491 registered with members: Member A8, Member B8. Assigned case-r1-cf.",
+      "timestamp": "2026-09-27T16:57:43.649Z"
+    },
+    {
+      "id": "log-1790528263431-8659",
+      "team_code": "TEAM-15664",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-15664 authenticated successfully.",
+      "timestamp": "2026-09-27T16:57:43.431Z"
+    },
+    {
+      "id": "log-1790528263313-3696",
+      "team_code": "TEAM-15664",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 7_1790528263200 registered with members: Member A7, Member B7. Assigned case-r1-cf.",
+      "timestamp": "2026-09-27T16:57:43.313Z"
+    },
+    {
+      "id": "log-1790528263134-7668",
+      "team_code": "TEAM-15713",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-15713 authenticated successfully.",
+      "timestamp": "2026-09-27T16:57:43.134Z"
+    },
+    {
+      "id": "log-1790528262962-1929",
+      "team_code": "TEAM-15713",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 6_1790528262853 registered with members: Member A6, Member B6. Assigned case-r1-cf.",
+      "timestamp": "2026-09-27T16:57:42.962Z"
+    },
+    {
+      "id": "log-1790528262784-6445",
+      "team_code": "TEAM-98315",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-98315 authenticated successfully.",
+      "timestamp": "2026-09-27T16:57:42.784Z"
+    },
+    {
+      "id": "log-1790528262666-7812",
+      "team_code": "TEAM-98315",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 5_1790528262557 registered with members: Member A5, Member B5. Assigned case-r1-cf.",
+      "timestamp": "2026-09-27T16:57:42.666Z"
+    },
+    {
+      "id": "log-1790528262438-4369",
+      "team_code": "TEAM-40384",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-40384 authenticated successfully.",
+      "timestamp": "2026-09-27T16:57:42.438Z"
+    },
+    {
+      "id": "log-1790528262319-7461",
+      "team_code": "TEAM-40384",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 4_1790528262202 registered with members: Member A4, Member B4. Assigned case-r1-cf.",
+      "timestamp": "2026-09-27T16:57:42.319Z"
+    },
+    {
+      "id": "log-1790528262093-7510",
+      "team_code": "TEAM-43251",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-43251 authenticated successfully.",
+      "timestamp": "2026-09-27T16:57:42.093Z"
+    },
+    {
+      "id": "log-1790528261902-6296",
+      "team_code": "TEAM-43251",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 3_1790528261801 registered with members: Member A3, Member B3. Assigned case-r1-cf.",
+      "timestamp": "2026-09-27T16:57:41.902Z"
+    },
+    {
+      "id": "log-1790528261743-8812",
+      "team_code": "TEAM-26853",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-26853 authenticated successfully.",
+      "timestamp": "2026-09-27T16:57:41.743Z"
+    },
+    {
+      "id": "log-1790528261626-8336",
+      "team_code": "TEAM-26853",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 2_1790528261512 registered with members: Member A2, Member B2. Assigned case-r1-cf.",
+      "timestamp": "2026-09-27T16:57:41.626Z"
+    },
+    {
+      "id": "log-1790528261372-3622",
+      "team_code": "TEAM-26375",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-26375 authenticated successfully.",
+      "timestamp": "2026-09-27T16:57:41.372Z"
+    },
+    {
+      "id": "log-1790528261092-2238",
+      "team_code": "TEAM-26375",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 1_1790528260881 registered with members: Member A1, Member B1. Assigned case-r1-cf.",
+      "timestamp": "2026-09-27T16:57:41.092Z"
+    },
+    {
+      "id": "log-1790528260802-6523",
+      "team_code": "ADMIN",
+      "action": "START_ROUND_01",
+      "details": "Round 01 started/resumed by admin.",
+      "timestamp": "2026-09-27T16:57:40.802Z"
+    },
+    {
+      "id": "log-1790528260539-3033",
+      "team_code": "ADMIN",
+      "action": "ADMIN_LOGIN",
+      "details": "Administrator logged into the control panel.",
+      "timestamp": "2026-09-27T16:57:40.539Z"
+    },
+    {
+      "id": "log-1790528201853-1797",
+      "team_code": "TEAM-83536",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-83536 authenticated successfully.",
+      "timestamp": "2026-09-27T16:56:41.853Z"
+    },
+    {
+      "id": "log-1790528201730-4696",
+      "team_code": "TEAM-83536",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 11_1790528201534 registered with members: Member A11, Member B11. Assigned case-r1-eternal.",
+      "timestamp": "2026-09-27T16:56:41.730Z"
+    },
+    {
+      "id": "log-1790528201472-1188",
+      "team_code": "TEAM-26000",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-26000 authenticated successfully.",
+      "timestamp": "2026-09-27T16:56:41.472Z"
+    },
+    {
+      "id": "log-1790528201359-7341",
+      "team_code": "TEAM-26000",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 10_1790528201252 registered with members: Member A10, Member B10. Assigned case-r1-cf.",
+      "timestamp": "2026-09-27T16:56:41.359Z"
+    },
+    {
+      "id": "log-1790528201112-1477",
+      "team_code": "TEAM-92281",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-92281 authenticated successfully.",
+      "timestamp": "2026-09-27T16:56:41.112Z"
+    },
+    {
+      "id": "log-1790528200974-3619",
+      "team_code": "TEAM-92281",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 9_1790528200868 registered with members: Member A9, Member B9. Assigned case-r1-cf.",
+      "timestamp": "2026-09-27T16:56:40.974Z"
+    },
+    {
+      "id": "log-1790528200808-7202",
+      "team_code": "TEAM-79384",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-79384 authenticated successfully.",
+      "timestamp": "2026-09-27T16:56:40.808Z"
+    },
+    {
+      "id": "log-1790528200555-3793",
+      "team_code": "TEAM-79384",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 8_1790528200451 registered with members: Member A8, Member B8. Assigned case-r1-dior.",
+      "timestamp": "2026-09-27T16:56:40.555Z"
+    },
+    {
+      "id": "log-1790528200388-7423",
+      "team_code": "TEAM-43690",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-43690 authenticated successfully.",
+      "timestamp": "2026-09-27T16:56:40.388Z"
+    },
+    {
+      "id": "log-1790528200272-4901",
+      "team_code": "TEAM-43690",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 7_1790528200167 registered with members: Member A7, Member B7. Assigned case-r1-cf.",
+      "timestamp": "2026-09-27T16:56:40.272Z"
+    },
+    {
+      "id": "log-1790528200051-5848",
+      "team_code": "TEAM-26828",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-26828 authenticated successfully.",
+      "timestamp": "2026-09-27T16:56:40.051Z"
+    },
+    {
+      "id": "log-1790528199935-9146",
+      "team_code": "TEAM-26828",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 6_1790528199813 registered with members: Member A6, Member B6. Assigned case-r1-cf.",
+      "timestamp": "2026-09-27T16:56:39.936Z"
+    },
+    {
+      "id": "log-1790528199745-3648",
+      "team_code": "TEAM-90003",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-90003 authenticated successfully.",
+      "timestamp": "2026-09-27T16:56:39.745Z"
+    },
+    {
+      "id": "log-1790528199632-2295",
+      "team_code": "TEAM-90003",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 5_1790528199455 registered with members: Member A5, Member B5. Assigned case-r1-hyundai.",
+      "timestamp": "2026-09-27T16:56:39.632Z"
+    },
+    {
+      "id": "log-1790528199395-6228",
+      "team_code": "TEAM-61234",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-61234 authenticated successfully.",
+      "timestamp": "2026-09-27T16:56:39.395Z"
+    },
+    {
+      "id": "log-1790528199282-9617",
+      "team_code": "TEAM-61234",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 4_1790528199173 registered with members: Member A4, Member B4. Assigned case-r1-dior.",
+      "timestamp": "2026-09-27T16:56:39.282Z"
+    },
+    {
+      "id": "log-1790528199108-9897",
+      "team_code": "TEAM-39575",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-39575 authenticated successfully.",
+      "timestamp": "2026-09-27T16:56:39.108Z"
+    },
+    {
+      "id": "log-1790528198928-4410",
+      "team_code": "TEAM-39575",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 3_1790528198823 registered with members: Member A3, Member B3. Assigned case-r1-hyundai.",
+      "timestamp": "2026-09-27T16:56:38.928Z"
+    },
+    {
+      "id": "log-1790528198760-5964",
+      "team_code": "TEAM-26087",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-26087 authenticated successfully.",
+      "timestamp": "2026-09-27T16:56:38.760Z"
+    },
+    {
+      "id": "log-1790528198637-5161",
+      "team_code": "TEAM-26087",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 2_1790528198450 registered with members: Member A2, Member B2. Assigned case-r1-hyundai.",
+      "timestamp": "2026-09-27T16:56:38.637Z"
+    },
+    {
+      "id": "log-1790528198391-2453",
+      "team_code": "TEAM-98418",
+      "action": "PARTICIPANT_LOGIN",
+      "details": "Team TEAM-98418 authenticated successfully.",
+      "timestamp": "2026-09-27T16:56:38.391Z"
+    },
+    {
+      "id": "log-1790528198268-6651",
+      "team_code": "TEAM-98418",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 1_1790528198151 registered with members: Member A1, Member B1. Assigned case-r1-cf.",
+      "timestamp": "2026-09-27T16:56:38.268Z"
+    },
+    {
+      "id": "log-1790528165390-1402",
+      "team_code": "TEAM-68677",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 10_1790528165278 registered with members: Member A10, Member B10. Assigned case-r1-hyundai.",
+      "timestamp": "2026-09-27T16:56:05.390Z"
+    },
+    {
+      "id": "log-1790528165125-1165",
+      "team_code": "TEAM-25657",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 9_1790528164930 registered with members: Member A9, Member B9. Assigned case-r1-eternal.",
+      "timestamp": "2026-09-27T16:56:05.125Z"
+    },
+    {
+      "id": "log-1790528164867-1580",
+      "team_code": "TEAM-36024",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 8_1790528164758 registered with members: Member A8, Member B8. Assigned case-r1-dior.",
+      "timestamp": "2026-09-27T16:56:04.867Z"
+    },
+    {
+      "id": "log-1790528164689-1633",
+      "team_code": "TEAM-32021",
+      "action": "TEAM_REGISTERED",
+      "details": "Team Test Team 7_1790528164406 registered with members: Member A7, Member B7. Assigned case-r1-eternal.",
+      "timestamp": "2026-09-27T16:56:04.689Z"
     }
   ]
 }

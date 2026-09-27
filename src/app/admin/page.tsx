@@ -22,7 +22,10 @@ import {
   ListFilter,
   Layers,
   ExternalLink,
-  Lock
+  Lock,
+  KeyRound,
+  CheckSquare,
+  Award
 } from 'lucide-react';
 
 interface LeaderboardItem {
@@ -51,6 +54,14 @@ export default function AdminDashboardPage() {
   const [teamSubmissions, setTeamSubmissions] = useState<Submission[]>([]);
   const [resetConfirmOpen, setResetConfirmOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  // Answer Key & Override States
+  const [answerKeyModalOpen, setAnswerKeyModalOpen] = useState(false);
+  const [allAnswerKeys, setAllAnswerKeys] = useState<Record<string, any>>({});
+  const [activeCaseTab, setActiveCaseTab] = useState<string>('case-r2-hyundai');
+  const [overrideScores, setOverrideScores] = useState<Record<string, number>>({});
+  const [overrideReasons, setOverrideReasons] = useState<Record<string, string>>({});
+  const [savingSubId, setSavingSubId] = useState<string | null>(null);
 
   // Authenticate & SSE Setup
   useEffect(() => {
@@ -101,6 +112,55 @@ export default function AdminDashboardPage() {
 
   const [masterKeyData, setMasterKeyData] = useState<any>(null);
 
+  // Handle Answer Keys Modal Open
+  const handleOpenAnswerKeys = async () => {
+    try {
+      const res = await fetch('/api/admin/answer-key');
+      const data = await res.json();
+      if (data.answer_keys) {
+        setAllAnswerKeys(data.answer_keys);
+        setAnswerKeyModalOpen(true);
+      }
+    } catch (err) {
+      console.error('Failed to fetch answer keys:', err);
+    }
+  };
+
+  // Handle Save Score Override
+  const handleSaveOverride = async (subId: string) => {
+    const scoreVal = overrideScores[subId];
+    const reasonVal = overrideReasons[subId] || '';
+    if (scoreVal === undefined || isNaN(scoreVal)) return;
+
+    setSavingSubId(subId);
+    try {
+      const res = await fetch('/api/admin/override-score', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          submission_id: subId,
+          override_score: Number(scoreVal),
+          override_reason: reasonVal
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        if (selectedTeam) {
+          const subRes = await fetch(`/api/submissions?team_code=${selectedTeam.team_code}`);
+          const subData = await subRes.json();
+          if (subData.submissions) setTeamSubmissions(subData.submissions);
+        }
+        const lbRes = await fetch('/api/admin/leaderboard');
+        const lbData = await lbRes.json();
+        if (lbData.leaderboard) setLeaderboard(lbData.leaderboard);
+      }
+    } catch (err) {
+      console.error('Failed to save score override:', err);
+    } finally {
+      setSavingSubId(null);
+    }
+  };
+
   // Handle Team Detail Inspection
   const handleInspectTeam = async (item: LeaderboardItem) => {
     setSelectedTeam(item);
@@ -112,7 +172,17 @@ export default function AdminDashboardPage() {
       ]);
       const subData = await subRes.json();
       const mkData = await mkRes.json();
-      if (subData.submissions) setTeamSubmissions(subData.submissions);
+      if (subData.submissions) {
+        setTeamSubmissions(subData.submissions);
+        const initScores: Record<string, number> = {};
+        const initReasons: Record<string, string> = {};
+        subData.submissions.forEach((s: Submission) => {
+          initScores[s.id] = s.override_score !== undefined && s.override_score !== null ? s.override_score : (s.score || 0);
+          initReasons[s.id] = s.override_reason || '';
+        });
+        setOverrideScores(initScores);
+        setOverrideReasons(initReasons);
+      }
       if (mkData.masterKey) setMasterKeyData(mkData.masterKey);
     } catch (e) {
       console.error('Failed to load team audit data:', e);
@@ -139,7 +209,7 @@ export default function AdminDashboardPage() {
     return (
       <div className="min-h-screen bg-black flex flex-col items-center justify-center font-mono text-white">
         <div className="w-8 h-8 border-2 border-white border-t-transparent animate-spin mb-4" />
-        <span className="tracking-widest uppercase">LOADING ADMIN OPERATIONS CENTER (PORT 3001)...</span>
+        <span className="tracking-widest uppercase">LOADING ADMIN OPERATIONS CENTER...</span>
       </div>
     );
   }
@@ -176,13 +246,20 @@ export default function AdminDashboardPage() {
         </div>
 
         <div className="flex items-center gap-3">
+          <button
+            onClick={handleOpenAnswerKeys}
+            className="px-3.5 py-1.5 bg-emerald-950 border border-emerald-700 text-emerald-300 hover:text-white font-mono text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer"
+          >
+            <KeyRound className="w-3.5 h-3.5 text-emerald-400" />
+            Answer Keys (Round 2)
+          </button>
           <a
             href="http://localhost:3000"
             target="_blank"
             rel="noreferrer"
             className="px-3 py-1.5 bg-zinc-900 border border-zinc-700 text-zinc-300 hover:text-white font-mono text-xs flex items-center gap-1.5"
           >
-            <span>Participant Site (Port 3000)</span>
+            <span>Participant Site</span>
             <ExternalLink className="w-3.5 h-3.5" />
           </a>
           <Link
@@ -192,13 +269,6 @@ export default function AdminDashboardPage() {
           >
             <Tv className="w-3.5 h-3.5" />
             Live Projector Screen
-          </Link>
-          <Link
-            href="/admin/cases"
-            className="px-3 py-1.5 bg-zinc-900 border border-zinc-700 text-zinc-300 hover:text-white font-mono text-xs flex items-center gap-1.5"
-          >
-            <FileText className="w-3.5 h-3.5" />
-            Case Builder
           </Link>
           <Link
             href="/admin/audit"
@@ -481,6 +551,23 @@ export default function AdminDashboardPage() {
               </div>
 
               <div className="flex-1 overflow-y-auto space-y-5 font-mono text-xs">
+                {/* ADMIN DIAGNOSTIC QUESTION BINDING VIEW */}
+                <div className="p-3 bg-amber-950/40 border border-amber-800 font-mono text-xs space-y-1">
+                  <div className="font-bold text-amber-400 uppercase tracking-wider text-[11px] pb-1 border-b border-amber-900/60 flex items-center justify-between">
+                    <span>SYSTEM DIAGNOSTICS :: QUESTION BINDING</span>
+                    <span className="text-[10px] bg-amber-950 text-amber-300 px-2 py-0.5 border border-amber-700">CONFIDENTIAL ADMIN</span>
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-[11px]">
+                    <div><span className="text-zinc-400">Team:</span> <strong className="text-white">{selectedTeam.team_code}</strong></div>
+                    <div><span className="text-zinc-400">Assigned Case:</span> <strong className="text-white">{selectedTeam.assigned_case_id.toUpperCase()}</strong></div>
+                    <div><span className="text-zinc-400">Active Round:</span> <strong className="text-amber-300">Round {eventState.round2_status === 'ACTIVE' || eventState.round2_status === 'ENDED' ? '2' : '1'}</strong></div>
+                    <div><span className="text-zinc-400">Question Set:</span> <strong className="text-emerald-400">{(selectedTeam.assigned_case_id || 'case-01')}-round{eventState.round2_status === 'ACTIVE' || eventState.round2_status === 'ENDED' ? '2' : '1'}</strong></div>
+                  </div>
+                  <div className="text-[10px] text-zinc-400 mt-1">
+                    Question Count: <strong className="text-white">12 Questions</strong> | Verification: <span className="text-emerald-400 font-bold">CASE-ISOLATED & BOUND</span>
+                  </div>
+                </div>
+
                 {/* Master Key Solution Summary */}
                 {masterKeyData && masterKeyData.questions && (
                   <div className="p-4 bg-zinc-900 border border-zinc-700">
@@ -507,25 +594,208 @@ export default function AdminDashboardPage() {
                 )}
 
                 {/* Team Submissions */}
-                <div className="space-y-3">
+                <div className="space-y-4">
                   <div className="font-bold text-zinc-300 text-xs uppercase tracking-wider">LOGGED TEAM SUBMISSIONS</div>
                   {teamSubmissions.length === 0 ? (
                     <p className="text-center text-zinc-500 py-6 border border-zinc-800 bg-black">No submissions logged for this team yet.</p>
                   ) : (
                     teamSubmissions.map((sub) => (
-                      <div key={sub.id} className="p-4 bg-black border border-zinc-800">
-                        <div className="flex justify-between items-center mb-2 pb-2 border-b border-zinc-800">
-                          <span className="font-bold text-white">ROUND 0{sub.round_number} SUBMISSION</span>
-                          <span className="text-[10px] text-zinc-500">{sub.submitted_at ? new Date(sub.submitted_at).toLocaleString() : ''}</span>
+                      <div key={sub.id} className="p-4 bg-black border border-zinc-800 space-y-3">
+                        <div className="flex justify-between items-center pb-2 border-b border-zinc-800">
+                          <div>
+                            <span className="font-bold text-white text-sm">ROUND 0{sub.round_number} SUBMISSION</span>
+                            <span className="ml-2 text-[10px] text-zinc-500">{sub.submitted_at ? new Date(sub.submitted_at).toLocaleString() : ''}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] px-2 py-0.5 bg-zinc-900 border border-zinc-700 text-zinc-300 font-bold">
+                              Score: {sub.score !== undefined ? `${sub.score}%` : 'N/A'}
+                            </span>
+                          </div>
                         </div>
-                        <pre className="whitespace-pre-wrap text-zinc-300 text-xs font-mono">
-                          {JSON.stringify(sub.answers, null, 2)}
-                        </pre>
+
+                        {/* Breakdown if Round 2 */}
+                        {sub.breakdown && sub.breakdown.length > 0 && (
+                          <div className="space-y-2 mt-2">
+                            <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider">AUTOMATIC GRADING BREAKDOWN:</span>
+                            <div className="space-y-1.5 max-h-56 overflow-y-auto pr-1 border border-zinc-900 p-2 bg-zinc-950">
+                              {sub.breakdown.map((item: any) => (
+                                <div key={item.questionId} className="p-2 bg-black border border-zinc-800 text-[11px] flex items-start justify-between gap-2">
+                                  <div className="space-y-0.5 flex-1">
+                                    <div className="text-zinc-400 font-bold">{item.questionId}: {item.questionText}</div>
+                                    <div className="text-zinc-300">Submitted: <span className="font-mono text-white font-bold">{Array.isArray(item.submittedAnswer) ? item.submittedAnswer.join(', ') : (item.submittedAnswer || '—')}</span></div>
+                                    <div className="text-emerald-400 text-[10px]">Expected: {item.expectedAnswer}</div>
+                                  </div>
+                                  <div className="text-right flex flex-col items-end">
+                                    <span className={`px-1.5 py-0.5 text-[9px] font-bold ${item.isCorrect ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-red-950 text-red-400 border border-red-800'}`}>
+                                      {item.isCorrect ? 'MATCH' : 'MISMATCH'}
+                                    </span>
+                                    <span className="text-[10px] text-zinc-500 font-bold mt-1">{item.marksAwarded}/{item.maxMarks} pts</span>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Answers JSON Fallback if no breakdown */}
+                        {(!sub.breakdown || sub.breakdown.length === 0) && (
+                          <pre className="whitespace-pre-wrap text-zinc-300 text-xs font-mono p-2 bg-zinc-950 border border-zinc-900">
+                            {JSON.stringify(sub.answers, null, 2)}
+                          </pre>
+                        )}
+
+                        {/* Manual Score Override Panel */}
+                        <div className="p-3 bg-zinc-950 border border-zinc-800 rounded font-mono text-xs space-y-2.5">
+                          <div className="flex items-center justify-between">
+                            <span className="font-bold text-amber-400 flex items-center gap-1.5">
+                              <Award className="w-3.5 h-3.5" /> ADMIN SCORE OVERRIDE
+                            </span>
+                            <div className="text-[11px] text-zinc-400">
+                              Automatic Score: <span className="font-bold text-white">{sub.original_score !== undefined ? `${sub.original_score}%` : (sub.score !== undefined ? `${sub.score}%` : 'N/A')}</span>
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                            <div>
+                              <label className="text-[10px] text-zinc-400 block mb-1">FINAL SCORE (%)</label>
+                              <input
+                                type="number"
+                                min="0"
+                                max="100"
+                                value={overrideScores[sub.id] !== undefined ? overrideScores[sub.id] : (sub.score || 0)}
+                                onChange={(e) => setOverrideScores({ ...overrideScores, [sub.id]: Number(e.target.value) })}
+                                className="w-full bg-black border border-zinc-700 px-2.5 py-1 text-white font-mono text-xs focus:outline-none focus:border-amber-500"
+                              />
+                            </div>
+                            <div>
+                              <label className="text-[10px] text-zinc-400 block mb-1">OVERRIDE REASON</label>
+                              <input
+                                type="text"
+                                placeholder="Reason for score adjustment..."
+                                value={overrideReasons[sub.id] || ''}
+                                onChange={(e) => setOverrideReasons({ ...overrideReasons, [sub.id]: e.target.value })}
+                                className="w-full bg-black border border-zinc-700 px-2.5 py-1 text-white font-mono text-xs focus:outline-none focus:border-amber-500"
+                              />
+                            </div>
+                            <div className="flex items-end">
+                              <button
+                                onClick={() => handleSaveOverride(sub.id)}
+                                disabled={savingSubId === sub.id}
+                                className="w-full py-1 px-3 bg-amber-500 hover:bg-amber-400 text-black font-extrabold font-mono text-xs transition-colors disabled:opacity-50 cursor-pointer uppercase"
+                              >
+                                {savingSubId === sub.id ? 'SAVING...' : 'SAVE OVERRIDE'}
+                              </button>
+                            </div>
+                          </div>
+
+                          {sub.override_reason && (
+                            <p className="text-[10px] text-zinc-400 italic">
+                              Current Override Reason: "{sub.override_reason}"
+                            </p>
+                          )}
+                        </div>
                       </div>
                     ))
                   )}
                 </div>
               </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Round 2 Official Answer Key Viewer Modal */}
+      <AnimatePresence>
+        {answerKeyModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="w-full max-w-4xl bg-zinc-950 border-2 border-emerald-700 p-6 shadow-2xl relative max-h-[90vh] flex flex-col font-mono text-xs"
+            >
+              <div className="flex items-center justify-between pb-4 mb-4 border-b border-zinc-800">
+                <div>
+                  <h3 className="text-base font-bold text-emerald-400 flex items-center gap-2">
+                    <KeyRound className="w-5 h-5" /> OFFICIAL ROUND 2 ANSWER KEYS (CONFIDENTIAL)
+                  </h3>
+                  <p className="text-xs text-zinc-400">
+                    Strictly confidential. Never expose to participant browsers or frontend APIs.
+                  </p>
+                </div>
+                <button
+                  onClick={() => setAnswerKeyModalOpen(false)}
+                  className="p-1.5 border border-zinc-800 hover:border-white bg-black text-zinc-400 hover:text-white"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Case Tabs */}
+              <div className="flex items-center gap-2 mb-4 border-b border-zinc-800 pb-2 overflow-x-auto">
+                {Object.keys(allAnswerKeys).map((cKey) => (
+                  <button
+                    key={cKey}
+                    onClick={() => setActiveCaseTab(cKey)}
+                    className={`px-3 py-1.5 font-bold uppercase transition-colors whitespace-nowrap ${
+                      activeCaseTab === cKey
+                        ? 'bg-emerald-950 border border-emerald-500 text-emerald-300'
+                        : 'bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white'
+                    }`}
+                  >
+                    {allAnswerKeys[cKey].case_title}
+                  </button>
+                ))}
+              </div>
+
+              {/* Active Case Questions List */}
+              {allAnswerKeys[activeCaseTab] && (
+                <div className="flex-1 overflow-y-auto space-y-3 pr-2">
+                  <div className="text-xs font-bold text-zinc-300 mb-2">
+                    CASE: {allAnswerKeys[activeCaseTab].case_title} ({allAnswerKeys[activeCaseTab].questions.length} QUESTIONS)
+                  </div>
+                  {allAnswerKeys[activeCaseTab].questions.map((q: any) => {
+                    const qText = q.question || q.text || '';
+                    const qExpected = q.expected_answer !== undefined ? q.expected_answer : q.expectedAnswer;
+                    const qAliases = q.accepted_aliases || q.acceptedAliases;
+                    const qUnit = q.unit || q.format_hint;
+                    const qMaxSelect = q.max_choices || q.maxSelect;
+
+                    return (
+                      <div key={q.id} className="p-3 bg-black border border-zinc-800 space-y-1">
+                        <div className="flex items-center justify-between">
+                          <span className="font-bold text-white text-xs">{q.id}. {qText}</span>
+                          <div className="flex items-center gap-2">
+                            <span className="px-2 py-0.5 bg-zinc-900 border border-zinc-700 text-zinc-300 text-[10px] font-bold">
+                              TYPE: {q.type}
+                            </span>
+                            <span className="px-2 py-0.5 bg-emerald-950 border border-emerald-700 text-emerald-300 text-[10px] font-bold">
+                              {q.marks || 1} MARKS
+                            </span>
+                          </div>
+                        </div>
+                        <div className="text-emerald-400 font-bold text-xs mt-1">
+                          EXPECTED:{' '}
+                          <span className="underline">
+                            {Array.isArray(qExpected) ? qExpected.join(', ') : (qExpected || 'N/A')}
+                          </span>{' '}
+                          {qUnit ? `(${qUnit})` : ''}
+                        </div>
+                        {qAliases && qAliases.length > 0 && (
+                          <div className="text-zinc-400 text-[11px]">
+                            ACCEPTED ALIASES: {Array.isArray(qAliases) ? qAliases.join(' | ') : qAliases}
+                          </div>
+                        )}
+                        {q.options && (
+                          <div className="text-zinc-500 text-[10px] mt-1">
+                            OPTIONS {qMaxSelect ? `(Select ${qMaxSelect})` : ''}: {q.options.join(', ')}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </motion.div>
           </div>
         )}
@@ -568,3 +838,4 @@ export default function AdminDashboardPage() {
     </div>
   );
 }
+

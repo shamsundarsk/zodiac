@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { broadcastStateChange } from '@/lib/realtime-broadcaster';
 import { evaluateSubmissionAgainstMasterKey } from '@/lib/master-key-engine';
+import { evaluateRound2Answers } from '@/lib/grading-engine';
 import { getAuthSession } from '@/lib/auth-session';
 
 export async function GET(request: Request) {
@@ -67,11 +68,9 @@ export async function POST(request: Request) {
       ? (team.assigned_case_id_r1 || 'case-r1-hyundai')
       : (team.assigned_case_id_r2 || 'case-r2-hyundai');
 
-    // Evaluate against MASTER KEY Excel Dataset
-    const evaluation = evaluateSubmissionAgainstMasterKey(assignedCaseId, round_number as 1 | 2, answers);
-
     // ROUND 1 SUBMISSION
     if (round_number === 1) {
+      const evaluation = evaluateSubmissionAgainstMasterKey(assignedCaseId, 1, answers);
       const isCorrect = evaluation.isCorrect;
       const timeTakenSec = eventState.round1_start_time 
         ? Math.floor((Date.now() - new Date(eventState.round1_start_time).getTime()) / 1000)
@@ -121,13 +120,17 @@ export async function POST(request: Request) {
         ? Math.floor((Date.now() - new Date(eventState.round2_start_time).getTime()) / 1000)
         : 0;
 
+      const r2Eval = evaluateRound2Answers(assignedCaseId, answers);
+
       const submission = await db.addSubmission({
         team_id: team.id,
         team_code: team.team_code,
         round_number: 2,
         answers,
         is_correct: true,
-        score: evaluation.scorePercentage,
+        score: r2Eval.percentage,
+        original_score: r2Eval.percentage,
+        breakdown: r2Eval.breakdown,
         status: 'ACCEPTED',
         remaining_prize: lockedPrize,
         attempt_number: attemptNumber,
@@ -137,7 +140,7 @@ export async function POST(request: Request) {
       await db.logAudit(
         team.team_code,
         'R2_FINAL_LOCK',
-        `Locked Round 02 answer with ₹${lockedPrize.toLocaleString('en-IN')} remaining prize. Master Key score: ${evaluation.scorePercentage}%.`
+        `Locked Round 02 answer with ₹${(lockedPrize || 0).toLocaleString('en-IN')} remaining prize. Master Key score: ${r2Eval.percentage}% (${r2Eval.totalScore}/${r2Eval.maxPossibleScore} pts).`
       );
 
       broadcastStateChange({ type: 'SUBMISSION', team_code: team.team_code, round_number: 2 });
@@ -146,8 +149,11 @@ export async function POST(request: Request) {
         success: true,
         is_correct: true,
         locked_prize: lockedPrize,
-        score_percentage: evaluation.scorePercentage,
-        message: 'FINAL ANSWER LOCKED. Your prize allocation has been recorded.'
+        score_percentage: r2Eval.percentage,
+        total_score: r2Eval.totalScore,
+        max_possible_score: r2Eval.maxPossibleScore,
+        breakdown: r2Eval.breakdown,
+        message: 'FINAL ANSWER LOCKED. Your submission has been recorded.'
       });
     }
 
