@@ -1,0 +1,6 @@
+ARCHIVE NOTE
+Reference: START-72
+Secondary: ULS-68
+A personnel record in another folder contains one unusually important historical employee.
+Another record contains a company-history marker.
+This note does not name the company.

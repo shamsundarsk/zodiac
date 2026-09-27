@@ -1,0 +1,91 @@
+Vendor ID,Vendor Name,Country,Category,Annual Spend INR Cr,Dependency %,Risk,Alternate Supplier
+V-001,Supplier-001,USA,Logistics,102.7,85,Medium,None
+V-002,Supplier-002,India,Thermal,338.2,68,Low,Qualified
+V-003,Supplier-003,Japan,Copper/Busbar,66.5,12,Low,None
+V-004,Supplier-004,Germany,Test Equipment,261.3,18,Medium,Available
+V-005,Supplier-005,USA,Software,202.7,82,Medium,None
+V-006,Supplier-006,South Korea,Thermal,51.0,18,Low,Qualified
+V-007,Supplier-007,Singapore,Power Electronics,72.0,87,Medium,Available
+V-008,Supplier-008,USA,Power Electronics,374.0,62,Medium,Available
+V-009,Supplier-009,Japan,Copper/Busbar,69.9,54,Low,Available
+V-010,Supplier-010,Japan,Copper/Busbar,137.4,43,Low,Available
+V-011,Supplier-011,South Korea,Software,327.3,23,Low,None
+V-012,Supplier-012,Taiwan,Software,189.3,46,Low,Qualified
+V-013,Supplier-013,Japan,Copper/Busbar,323.9,89,Low,Available
+V-014,Supplier-014,South Korea,PCB,263.4,49,Low,None
+V-015,Supplier-015,India,Thermal,247.8,37,Medium,None
+V-016,Supplier-016,South Korea,Software,366.3,86,Low,Qualified
+V-017,HanCore Power Systems,South Korea,Power Electronics,487.0,86,High,None
+V-018,Supplier-018,South Korea,Copper/Busbar,318.8,55,High,Qualified
+V-019,Supplier-019,Germany,Thermal,66.6,79,Medium,Qualified
+V-020,Supplier-020,Japan,Logistics,255.5,58,High,None
+V-021,Supplier-021,USA,Software,184.0,35,Low,None
+V-022,Supplier-022,Taiwan,Power Electronics,225.4,41,Low,Available
+V-023,Supplier-023,Singapore,PCB,132.1,32,Medium,Available
+V-024,Supplier-024,USA,Thermal,350.0,47,High,Available
+V-025,Supplier-025,USA,Power Electronics,212.0,62,Medium,None
+V-026,Supplier-026,USA,Logistics,165.5,26,Low,Qualified
+V-027,Supplier-027,Japan,Thermal,49.0,15,Low,Available
+V-028,Supplier-028,Taiwan,Test Equipment,385.0,83,Low,Available
+V-029,Supplier-029,India,Logistics,419.0,54,Low,Qualified
+V-030,Supplier-030,Germany,Copper/Busbar,118.0,79,Low,Qualified
+V-031,Supplier-031,USA,Test Equipment,35.5,53,Low,None
+V-032,Supplier-032,USA,Power Electronics,326.7,83,Low,Available
+V-033,Supplier-033,India,Power Electronics,400.6,68,Low,Available
+V-034,Supplier-034,Singapore,PCB,293.6,22,High,None
+V-035,Supplier-035,USA,Software,35.0,73,High,Available
+V-036,Supplier-036,Germany,Test Equipment,179.5,78,Medium,Qualified
+V-037,Supplier-037,Germany,Software,367.8,17,High,None
+V-038,Supplier-038,India,PCB,151.0,12,Low,Available
+V-039,Supplier-039,USA,Power Electronics,293.2,39,Medium,Available
+V-040,Supplier-040,Japan,Power Electronics,107.4,68,Low,None
+V-041,Supplier-041,Taiwan,Test Equipment,418.0,47,Medium,None
+V-042,Supplier-042,Singapore,PCB,115.3,40,Low,None
+V-043,Supplier-043,Taiwan,Software,307.9,23,Medium,Qualified
+V-044,Supplier-044,Japan,Power Electronics,187.6,60,Low,Qualified
+V-045,Supplier-045,Taiwan,Test Equipment,340.2,56,High,None
+V-046,Supplier-046,Taiwan,Software,217.6,63,Medium,Available
+V-047,Supplier-047,Taiwan,Copper/Busbar,356.7,23,Low,Available
+V-048,Supplier-048,Singapore,Test Equipment,194.3,12,Low,Available
+V-049,Supplier-049,USA,Logistics,215.2,29,Medium,None
+V-050,Supplier-050,Germany,Logistics,289.0,49,High,Available
+V-051,Supplier-051,Taiwan,Test Equipment,124.7,27,Low,Available
+V-052,Supplier-052,Singapore,Thermal,337.3,55,High,Qualified
+V-053,Supplier-053,Taiwan,Logistics,376.5,48,High,Qualified
+V-054,Supplier-054,South Korea,Power Electronics,204.1,24,High,None
+V-055,Supplier-055,Singapore,Test Equipment,246.3,59,High,Qualified
+V-056,Supplier-056,Singapore,Software,144.7,60,High,Qualified
+V-057,Supplier-057,USA,Copper/Busbar,401.1,31,Medium,Qualified
+V-058,Supplier-058,India,Test Equipment,222.1,41,Low,Available
+V-059,Supplier-059,South Korea,Power Electronics,407.5,84,Low,Qualified
+V-060,Supplier-060,Taiwan,Copper/Busbar,60.5,18,Medium,Available
+V-061,GridSight Systems,India,Software,205.0,62,Medium,Qualified
+V-062,Supplier-062,USA,Software,18.6,57,High,None
+V-063,Supplier-063,Germany,Copper/Busbar,298.5,84,Low,Qualified
+V-064,Supplier-064,Taiwan,Copper/Busbar,29.2,56,Low,Qualified
+V-065,Supplier-065,Taiwan,Test Equipment,318.8,46,High,Available
+V-066,Supplier-066,USA,Software,336.6,16,High,None
+V-067,Supplier-067,Japan,Power Electronics,274.3,72,High,None
+V-068,Supplier-068,Taiwan,Thermal,296.1,34,Medium,None
+V-069,Supplier-069,Germany,Test Equipment,57.2,55,Medium,None
+V-070,Supplier-070,India,Thermal,88.0,74,High,Available
+V-071,Supplier-071,Taiwan,PCB,40.9,25,High,Qualified
+V-072,Supplier-072,Germany,PCB,40.6,77,High,Qualified
+V-073,Supplier-073,Germany,Power Electronics,123.0,39,High,Qualified
+V-074,Supplier-074,Japan,Logistics,13.8,44,Low,None
+V-075,Supplier-075,USA,Software,119.3,55,Low,None
+V-076,Supplier-076,Japan,Copper/Busbar,273.8,67,Low,None
+V-077,Supplier-077,South Korea,PCB,243.1,86,High,Available
+V-078,Supplier-078,India,Thermal,140.7,84,Medium,Available
+V-079,Supplier-079,India,Software,34.7,45,High,Available
+V-080,Supplier-080,Taiwan,Software,248.2,30,Medium,None
+V-081,Supplier-081,Japan,PCB,332.8,89,High,None
+V-082,Supplier-082,Germany,Thermal,319.4,45,Medium,Qualified
+V-083,Supplier-083,Taiwan,PCB,254.3,36,High,Qualified
+V-084,Supplier-084,Taiwan,PCB,295.9,30,Low,Available
+V-085,Supplier-085,South Korea,Power Electronics,390.0,13,High,None
+V-086,Supplier-086,South Korea,Copper/Busbar,102.8,12,Low,Available
+V-087,Supplier-087,Singapore,Software,227.2,29,Low,None
+V-088,Supplier-088,South Korea,Copper/Busbar,119.7,29,Medium,None
+V-089,Supplier-089,Singapore,Software,359.8,14,High,None
+V-090,Supplier-090,Singapore,Test Equipment,353.1,89,Medium,None

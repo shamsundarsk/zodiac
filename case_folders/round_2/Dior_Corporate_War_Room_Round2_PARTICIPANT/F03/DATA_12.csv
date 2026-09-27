@@ -1,0 +1,81 @@
+Vendor ID,Vendor Type,Country,Annual Spend EUR m,Dependency %,Risk,Alternative Status
+V-001,Events,Switzerland,100.2,20,Low,Qualified
+V-002,Leather Equipment,France,95.7,71,High,None
+V-003,Packaging,Portugal,32.2,9,Low,Qualified
+V-004,Leather Equipment,Japan,19.4,56,Medium,Qualified
+V-005,Freight,France,83.2,26,Low,Qualified
+V-006,Packaging,Switzerland,88.9,31,Low,Qualified
+V-007,Packaging,Italy,233.2,68,Medium,Qualified
+V-008,Leather Equipment,South Korea,124.9,44,Medium,Qualified
+V-009,Events,Switzerland,49.3,26,Low,Qualified
+V-010,Freight,France,111.0,85,High,None
+V-011,Construction,France,118.7,59,Medium,Qualified
+V-012,Construction,Italy,79.7,46,Medium,Qualified
+V-013,Freight,Switzerland,47.1,85,High,Qualified
+V-014,Construction,Germany,243.9,34,Low,Qualified
+V-015,Leather Equipment,Germany,55.7,39,Low,Qualified
+V-016,Construction,Spain,254.5,43,Medium,Qualified
+V-017,Leather Equipment,Italy,184.6,79,High,None
+V-018,Leather Equipment,Italy,197.5,38,Low,Qualified
+V-019,Construction,Spain,37.5,85,High,None
+V-020,IT,Japan,46.1,82,High,None
+V-021,Leather Equipment,Italy,47.6,20,Low,Qualified
+V-022,Freight,Japan,248.2,74,High,None
+V-023,Construction,Portugal,183.7,11,Low,Qualified
+V-024,IT,Spain,255.9,56,Medium,Qualified
+V-025,Construction,Germany,249.2,13,Low,Qualified
+V-026,Packaging,France,124.0,70,High,Qualified
+V-027,Leather Equipment,Switzerland,117.5,17,Low,Qualified
+V-028,Freight,South Korea,181.1,8,Low,Qualified
+V-029,Packaging,South Korea,109.0,50,Medium,Qualified
+V-030,Leather Equipment,Japan,43.2,23,Low,Qualified
+V-031,Packaging,Switzerland,220.8,74,High,Qualified
+V-032,Events,Switzerland,218.8,65,Medium,Qualified
+V-033,Packaging,Switzerland,59.8,23,Low,Qualified
+V-034,Construction,Portugal,259.3,11,Low,Qualified
+V-035,Freight,France,244.2,63,Medium,Qualified
+V-036,Events,Japan,207.5,19,Low,Qualified
+V-037,Packaging,Portugal,101.3,38,Low,Qualified
+V-038,Events,Spain,191.3,74,High,None
+V-039,Construction,France,155.4,77,High,None
+V-040,Packaging,Spain,91.8,41,Medium,Qualified
+V-041,Construction,South Korea,21.8,69,Medium,Qualified
+V-042,Events,Portugal,179.9,41,Medium,Qualified
+V-043,Construction,Portugal,214.9,62,Medium,Qualified
+V-044,Packaging,France,72.4,31,Low,Qualified
+V-045,Construction,Portugal,63.8,52,Medium,Qualified
+V-046,Construction,Germany,246.2,36,Low,Qualified
+V-047,Leather Equipment,Japan,167.4,30,Low,Qualified
+V-048,Events,Spain,140.8,82,High,None
+V-049,Events,France,159.2,24,Low,Qualified
+V-050,Packaging,France,133.3,10,Low,Qualified
+V-051,Construction,Italy,201.1,80,High,None
+V-052,Events,Japan,224.4,71,High,Qualified
+V-053,Leather Equipment,South Korea,208.1,21,Low,Qualified
+V-054,Events,Italy,92.1,55,Medium,Qualified
+V-055,Construction,Spain,71.7,34,Low,Qualified
+V-056,Construction,Portugal,223.8,81,High,Qualified
+V-057,Freight,Japan,110.0,20,Low,Qualified
+V-058,Construction,Portugal,183.2,33,Low,Qualified
+V-059,Freight,Japan,146.6,28,Low,Qualified
+V-060,Packaging,South Korea,151.6,69,Medium,Qualified
+V-061,Events,Switzerland,222.2,49,Medium,Qualified
+V-062,IT,Germany,56.9,16,Low,Qualified
+V-063,Leather Equipment,Spain,183.4,44,Medium,Qualified
+V-064,Freight,Portugal,229.5,63,Medium,Qualified
+V-065,Freight,Portugal,207.6,59,Medium,Qualified
+V-066,Packaging,Spain,173.2,77,High,None
+V-067,Construction,Italy,130.9,80,High,None
+V-068,Leather Equipment,Switzerland,36.3,20,Low,Qualified
+V-069,Events,Portugal,28.7,53,Medium,Qualified
+V-070,Freight,Italy,168.5,30,Low,Qualified
+V-071,Freight,Italy,184.9,63,Medium,Qualified
+V-072,IT,South Korea,229.9,22,Low,Qualified
+V-073,Events,Portugal,258.7,44,Medium,Qualified
+V-074,Construction,Spain,16.7,63,Medium,Qualified
+V-075,Construction,Italy,236.7,61,Medium,Qualified
+V-076,Events,Portugal,95.9,76,High,Qualified
+V-077,IT,Portugal,257.8,72,High,Qualified
+V-078,Leather Equipment,Portugal,240.1,42,Medium,Qualified
+V-079,Packaging,Switzerland,150.8,70,High,None
+V-080,Construction,Japan,177.4,74,High,None

@@ -1,0 +1,11 @@
+ARCHIVE NOTE
+
+Routine startup archive fragment.
+
+Primary marker: ET-17
+Secondary marker: MUM-44
+
+One personnel record elsewhere contains an unusually important founding executive.
+A separate history record contains a year that becomes important after cross-checking.
+
+The legal company name is omitted.

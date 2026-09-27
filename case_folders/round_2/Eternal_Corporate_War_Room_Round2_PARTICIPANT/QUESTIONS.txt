@@ -1,0 +1,18 @@
+ROUND 2 - CORPORATE WAR ROOM
+
+This archive is a business-performance investigation. Reconstruct financial performance, competition, spending, investment effectiveness, operations, customers and internal risk.
+
+The detailed internal figures are synthetic game data. You are expected to calculate, filter, reconcile and cross-reference.
+
+1. Calculate the FY23-FY26 revenue CAGR. Give one decimal place.
+2. From FY25 to FY26, by how many percentage points did normalized operating margin change? Which expenditure category had the largest absolute increase?
+3. Across FY24-Q1 to FY26-Q4, which competitor gained the most market share, and by how many percentage points?
+4. In FY26-Q3 pricing, which segment has the widest contract-value premium versus a tracked competitor, and which competitor event matches that segment?
+5. Calculate the percentage increase in Digital expenditure from FY25 to FY26. Which project is linked to the digital-platform procurement trail?
+6. Which strategic project consumed the largest share of strategic-project actual spend? Calculate its portfolio percentage.
+7. Trace the specialist component payment: transaction ID, vendor ID, PO number, project code, source country and receiving site.
+8. Which strategic project has the largest expected-vs-actual ROI gap? State expected ROI, actual ROI and gap in percentage points.
+9. Which PX-GAMMA site has utilization below 60%, inventory days above 60 and energy cost above INR 1.45 per unit? What percentage of the modeled total site capacity does it represent?
+10. What percentage of strategic-account revenue is contributed by the top five accounts, and which top-five account has the largest retention decline?
+11. Which product segment has the widest gross-to-contribution margin gap, and which cost component contributes the most?
+12. Produce three measurable business weaknesses supported by at least four files across at least three folders. For each, provide a metric, its change/variance and an evidence path.

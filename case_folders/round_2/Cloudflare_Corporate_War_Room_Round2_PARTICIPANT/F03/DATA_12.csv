@@ -1,0 +1,91 @@
+Vendor ID,Vendor Name,Country,Category,Annual Spend USD m,Dependency %,Risk,Alternate Supplier
+V-001,Vendor-001,Brazil,Colocation,18.9,30,High,Available
+V-002,Vendor-002,UK,Security Services,250.9,24,Medium,None
+V-003,Vendor-003,UK,Colocation,333.1,53,High,Available
+V-004,Vendor-004,Japan,Cloud Compute,167.6,18,Medium,Available
+V-005,Vendor-005,Netherlands,Transit,67.6,65,High,Qualified
+V-006,Vendor-006,Germany,Colocation,288.3,62,Low,None
+V-007,Vendor-007,Netherlands,Transit,62.3,15,High,None
+V-008,Vendor-008,Brazil,Optics,235.4,25,Medium,Available
+V-009,Vendor-009,India,Transit,180.4,80,Low,Available
+V-010,Vendor-010,Germany,Transit,263.7,47,Low,Available
+V-011,Vendor-011,Germany,Security Services,338.3,21,High,Qualified
+V-012,Vendor-012,Netherlands,Network Equipment,130.6,23,Medium,Available
+V-013,Vendor-013,Singapore,Security Services,248.9,57,Medium,Available
+V-014,Vendor-014,Singapore,Network Equipment,128.3,23,Low,Qualified
+V-015,Vendor-015,Canada,Cloud Compute,146.0,54,High,None
+V-016,Vendor-016,Germany,Optics,243.3,55,Medium,Available
+V-017,Nordic Edge Components,Germany,Network Equipment,263.0,84,High,None
+V-018,Vendor-018,Brazil,Colocation,354.8,32,High,None
+V-019,Vendor-019,India,Cloud Compute,200.8,60,Medium,Qualified
+V-020,Vendor-020,Netherlands,Network Equipment,83.7,25,Medium,Available
+V-021,Vendor-021,Netherlands,Transit,119.4,24,High,Available
+V-022,Vendor-022,US,Optics,269.7,89,High,Qualified
+V-023,Vendor-023,Singapore,Network Equipment,237.1,84,High,Qualified
+V-024,Vendor-024,Germany,Colocation,172.1,90,High,Qualified
+V-025,Vendor-025,Germany,Cloud Compute,216.5,26,Medium,Qualified
+V-026,Vendor-026,Netherlands,Network Equipment,282.4,36,High,Available
+V-027,Vendor-027,Canada,Transit,85.1,87,High,Available
+V-028,Vendor-028,Canada,Colocation,28.5,77,Low,Available
+V-029,Vendor-029,Japan,Colocation,107.5,41,High,Qualified
+V-030,Vendor-030,Brazil,Cloud Compute,386.5,20,Low,None
+V-031,Vendor-031,India,Network Equipment,299.1,81,High,Qualified
+V-032,Vendor-032,Japan,Optics,234.1,37,Medium,None
+V-033,Vendor-033,Brazil,Colocation,251.8,24,High,Qualified
+V-034,Vendor-034,Brazil,Transit,222.7,60,Medium,Qualified
+V-035,Vendor-035,Canada,Optics,14.7,32,Medium,Available
+V-036,Vendor-036,Singapore,Network Equipment,221.9,50,Low,Available
+V-037,Vendor-037,Germany,Transit,159.8,30,High,Available
+V-038,Vendor-038,Brazil,Colocation,305.9,76,High,Qualified
+V-039,Vendor-039,Canada,Transit,253.0,67,Low,Available
+V-040,Vendor-040,US,Transit,246.0,35,Low,None
+V-041,Vendor-041,Netherlands,Network Equipment,375.4,33,Low,Available
+V-042,Vendor-042,Japan,Transit,222.8,66,High,None
+V-043,Vendor-043,US,Security Services,309.0,51,Low,Available
+V-044,BayLink Transit Services,Singapore,Transit,141.0,72,High,Qualified
+V-045,Vendor-045,Brazil,Optics,70.2,89,Low,None
+V-046,Vendor-046,Netherlands,Colocation,80.4,58,Medium,None
+V-047,Vendor-047,UK,Transit,166.3,31,Low,Available
+V-048,Vendor-048,Singapore,Optics,362.7,79,High,Qualified
+V-049,Vendor-049,Germany,Optics,51.3,75,High,None
+V-050,Vendor-050,US,Optics,217.4,30,Low,Qualified
+V-051,Vendor-051,Germany,Optics,232.0,15,High,None
+V-052,Vendor-052,Brazil,Optics,183.6,20,High,None
+V-053,Vendor-053,Brazil,Transit,394.9,76,Medium,Qualified
+V-054,Vendor-054,UK,Cloud Compute,66.6,76,Low,Available
+V-055,Vendor-055,Japan,Optics,369.7,67,Medium,Available
+V-056,Vendor-056,US,Security Services,315.4,15,High,None
+V-057,Vendor-057,UK,Optics,14.9,41,High,Qualified
+V-058,Vendor-058,Brazil,Colocation,55.5,69,High,None
+V-059,Vendor-059,Japan,Colocation,360.8,69,High,Qualified
+V-060,Vendor-060,Japan,Security Services,174.2,41,Medium,None
+V-061,Vendor-061,Netherlands,Cloud Compute,84.9,86,High,Qualified
+V-062,Vendor-062,Japan,Colocation,247.7,65,High,Available
+V-063,Vendor-063,UK,Security Services,105.7,35,Low,Available
+V-064,Vendor-064,Netherlands,Cloud Compute,332.7,85,High,None
+V-065,Vendor-065,US,Transit,170.8,15,Low,Available
+V-066,Vendor-066,Canada,Optics,189.6,23,Medium,Available
+V-067,Vendor-067,India,Network Equipment,260.5,64,Medium,None
+V-068,Vendor-068,Netherlands,Colocation,302.3,22,Low,None
+V-069,Vendor-069,Canada,Cloud Compute,16.4,81,Medium,Available
+V-070,Vendor-070,US,Optics,220.3,44,High,Available
+V-071,Vendor-071,US,Colocation,109.6,15,Low,Available
+V-072,Vendor-072,Japan,Cloud Compute,156.1,65,Medium,None
+V-073,Vendor-073,Singapore,Optics,18.3,23,Low,None
+V-074,Vendor-074,Japan,Security Services,350.5,89,Medium,Qualified
+V-075,Vendor-075,Japan,Transit,259.4,39,Medium,Qualified
+V-076,Vendor-076,US,Colocation,83.4,79,Low,None
+V-077,Vendor-077,UK,Optics,132.1,29,High,Qualified
+V-078,Vendor-078,Netherlands,Optics,114.1,71,Medium,None
+V-079,Vendor-079,Canada,Transit,321.0,73,High,Qualified
+V-080,Vendor-080,US,Cloud Compute,59.4,23,Medium,None
+V-081,Vendor-081,Singapore,Security Services,298.1,55,Medium,Qualified
+V-082,Vendor-082,Netherlands,Optics,16.0,48,Low,Qualified
+V-083,Vendor-083,UK,Cloud Compute,286.9,58,Low,None
+V-084,Vendor-084,Germany,Cloud Compute,140.1,42,High,Qualified
+V-085,Vendor-085,Germany,Security Services,290.7,39,Medium,None
+V-086,Vendor-086,Singapore,Transit,312.1,48,Low,Available
+V-087,Vendor-087,Singapore,Transit,353.2,60,Low,Available
+V-088,Vendor-088,UK,Network Equipment,287.7,78,High,Available
+V-089,Vendor-089,Netherlands,Network Equipment,358.0,62,High,Qualified
+V-090,Vendor-090,Canada,Optics,366.5,77,Low,None

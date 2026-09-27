@@ -1,0 +1,30 @@
+MYSTERY TECHNOLOGY COMPANY — FINAL QUESTIONS
+
+There are 9 numbered folders with exactly 4 puzzle files in each.
+The folder numbers are NOT the investigation order.
+
+Use repeated employee IDs, names, dates, transaction IDs, amounts, supplier/component codes,
+PO numbers, locations, product names, site records and company-history clues.
+
+Exactly five puzzle files are empty.
+Some files are detailed, some are short, and some contain routine/noise information.
+
+QUESTIONS
+
+1. What is the full legal name of the mystery company?
+2. Who is the founder?
+3. What employee ID connects the founder record to the transaction history?
+4. Which city and country are recorded as the founder's base and company headquarters?
+5. On what date did the traced founder-linked transaction occur?
+6. What was the exact amount and currency of that transaction?
+7. From which city/country did the money originate, and where was it sent?
+8. What was the stated purpose of the transaction, and which TWO component categories were funded?
+9. Which purchase-order number connects the component procurement to the site/shipping trail?
+10. Which Indian site is identified as the receiving/operations location?
+11. What was the company's first major product line recorded in the history trail, and in what year did it begin?
+12. In what year was the mystery company established, and what evidence connects that year to the founder?
+
+For every answer, record:
+Folder → File → clue → next folder → next file
+
+The company name is intentionally NOT written anywhere in the participant archive.

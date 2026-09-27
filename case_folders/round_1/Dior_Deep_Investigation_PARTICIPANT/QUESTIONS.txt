@@ -1,0 +1,33 @@
+MYSTERY FASHION & LUXURY HOUSE — FINAL QUESTIONS
+
+You have 9 numbered folders with 4 puzzle files in each folder.
+The folder numbers are NOT the investigation order.
+
+Some records are useful.
+Some are routine or misleading.
+Exactly five puzzle files are empty.
+
+Search repeated employee IDs, names, dates, transaction references, supplier codes, locations,
+collection dates, product names, design terms, corporate records and visual details.
+
+QUESTIONS
+
+1. What is the full name of the mystery fashion house?
+2. Who is the founder?
+3. What founder/employee identifier connects the personnel record to the finance record?
+4. Which city and country are associated with the founder's business base?
+5. What is the exact address that becomes a decisive location clue?
+6. What was the exact amount and currency of the traced fictional founder-linked transaction?
+7. What two luxury categories were being funded in that transaction?
+8. Which archive code connects the material supplier to the atelier/collection trail?
+9. On what date was the first collection presented?
+10. What phrase/name was given to the style revolution created by that first collection?
+11. What was the name of the first fragrance created alongside the first fashion collection?
+12. Which later group/corporate owner is connected to the fashion house?
+
+For each answer, record:
+Folder → File → clue → next folder → next file
+
+IMPORTANT:
+The company name is intentionally not written directly anywhere in the participant archive.
+Some identity clues are split across multiple files.

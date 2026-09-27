@@ -1,0 +1,73 @@
+Quarter,Competitor Code,Market Share %,Scope,Market Code
+FY24-Q1,COMP-A,18.4,Connectivity Cloud,MKT-27
+FY24-Q1,Akamai,10.8,Connectivity / Security,MKT-27
+FY24-Q1,Fastly,5.2,Connectivity / Security,MKT-27
+FY24-Q1,Zscaler,4.7,Connectivity / Security,MKT-27
+FY24-Q1,Palo Alto Edge,3.9,Connectivity / Security,MKT-27
+FY24-Q1,MegaCloud,8.1,Connectivity / Security,MKT-27
+FY24-Q2,COMP-A,18.2,Connectivity Cloud,MKT-27
+FY24-Q2,Akamai,10.6,Connectivity / Security,MKT-27
+FY24-Q2,Fastly,5.3,Connectivity / Security,MKT-27
+FY24-Q2,Zscaler,4.9,Connectivity / Security,MKT-27
+FY24-Q2,Palo Alto Edge,4.0,Connectivity / Security,MKT-27
+FY24-Q2,MegaCloud,8.0,Connectivity / Security,MKT-27
+FY24-Q3,COMP-A,18.0,Connectivity Cloud,MKT-27
+FY24-Q3,Akamai,10.4,Connectivity / Security,MKT-27
+FY24-Q3,Fastly,5.5,Connectivity / Security,MKT-27
+FY24-Q3,Zscaler,5.1,Connectivity / Security,MKT-27
+FY24-Q3,Palo Alto Edge,4.2,Connectivity / Security,MKT-27
+FY24-Q3,MegaCloud,7.9,Connectivity / Security,MKT-27
+FY24-Q4,COMP-A,17.8,Connectivity Cloud,MKT-27
+FY24-Q4,Akamai,10.1,Connectivity / Security,MKT-27
+FY24-Q4,Fastly,5.6,Connectivity / Security,MKT-27
+FY24-Q4,Zscaler,5.4,Connectivity / Security,MKT-27
+FY24-Q4,Palo Alto Edge,4.4,Connectivity / Security,MKT-27
+FY24-Q4,MegaCloud,7.8,Connectivity / Security,MKT-27
+FY25-Q1,COMP-A,17.6,Connectivity Cloud,MKT-27
+FY25-Q1,Akamai,9.9,Connectivity / Security,MKT-27
+FY25-Q1,Fastly,5.7,Connectivity / Security,MKT-27
+FY25-Q1,Zscaler,5.7,Connectivity / Security,MKT-27
+FY25-Q1,Palo Alto Edge,4.7,Connectivity / Security,MKT-27
+FY25-Q1,MegaCloud,7.6,Connectivity / Security,MKT-27
+FY25-Q2,COMP-A,17.4,Connectivity Cloud,MKT-27
+FY25-Q2,Akamai,9.7,Connectivity / Security,MKT-27
+FY25-Q2,Fastly,5.8,Connectivity / Security,MKT-27
+FY25-Q2,Zscaler,5.9,Connectivity / Security,MKT-27
+FY25-Q2,Palo Alto Edge,5.0,Connectivity / Security,MKT-27
+FY25-Q2,MegaCloud,7.5,Connectivity / Security,MKT-27
+FY25-Q3,COMP-A,17.2,Connectivity Cloud,MKT-27
+FY25-Q3,Akamai,9.4,Connectivity / Security,MKT-27
+FY25-Q3,Fastly,6.0,Connectivity / Security,MKT-27
+FY25-Q3,Zscaler,6.2,Connectivity / Security,MKT-27
+FY25-Q3,Palo Alto Edge,5.3,Connectivity / Security,MKT-27
+FY25-Q3,MegaCloud,7.4,Connectivity / Security,MKT-27
+FY25-Q4,COMP-A,17.0,Connectivity Cloud,MKT-27
+FY25-Q4,Akamai,9.2,Connectivity / Security,MKT-27
+FY25-Q4,Fastly,6.2,Connectivity / Security,MKT-27
+FY25-Q4,Zscaler,6.5,Connectivity / Security,MKT-27
+FY25-Q4,Palo Alto Edge,5.7,Connectivity / Security,MKT-27
+FY25-Q4,MegaCloud,7.2,Connectivity / Security,MKT-27
+FY26-Q1,COMP-A,16.8,Connectivity Cloud,MKT-27
+FY26-Q1,Akamai,9.0,Connectivity / Security,MKT-27
+FY26-Q1,Fastly,6.4,Connectivity / Security,MKT-27
+FY26-Q1,Zscaler,6.8,Connectivity / Security,MKT-27
+FY26-Q1,Palo Alto Edge,6.1,Connectivity / Security,MKT-27
+FY26-Q1,MegaCloud,7.1,Connectivity / Security,MKT-27
+FY26-Q2,COMP-A,16.6,Connectivity Cloud,MKT-27
+FY26-Q2,Akamai,8.8,Connectivity / Security,MKT-27
+FY26-Q2,Fastly,6.5,Connectivity / Security,MKT-27
+FY26-Q2,Zscaler,7.0,Connectivity / Security,MKT-27
+FY26-Q2,Palo Alto Edge,6.4,Connectivity / Security,MKT-27
+FY26-Q2,MegaCloud,7.0,Connectivity / Security,MKT-27
+FY26-Q3,COMP-A,16.4,Connectivity Cloud,MKT-27
+FY26-Q3,Akamai,8.5,Connectivity / Security,MKT-27
+FY26-Q3,Fastly,6.7,Connectivity / Security,MKT-27
+FY26-Q3,Zscaler,7.3,Connectivity / Security,MKT-27
+FY26-Q3,Palo Alto Edge,6.7,Connectivity / Security,MKT-27
+FY26-Q3,MegaCloud,6.8,Connectivity / Security,MKT-27
+FY26-Q4,COMP-A,16.2,Connectivity Cloud,MKT-27
+FY26-Q4,Akamai,8.3,Connectivity / Security,MKT-27
+FY26-Q4,Fastly,6.9,Connectivity / Security,MKT-27
+FY26-Q4,Zscaler,7.6,Connectivity / Security,MKT-27
+FY26-Q4,Palo Alto Edge,7.0,Connectivity / Security,MKT-27
+FY26-Q4,MegaCloud,6.7,Connectivity / Security,MKT-27

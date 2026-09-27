@@ -1,0 +1,31 @@
+HYUNDAI MOTOR INDIA - CORPORATE WAR ROOM
+ROUND 2 QUESTIONS
+
+IMPORTANT
+This round is an analytical simulation. Public facts are used only as benchmark/context. Transactional, customer, supplier, project, competitor and management datasets inside the case are synthetic and created for the game. Do not use outside data unless a question explicitly points to a public benchmark.
+
+RULE: Show your calculation/evidence path. A file name alone is not sufficient for questions requiring analysis.
+
+Q1. Using the revenue series supplied in the financial model, calculate the FY23-FY26 revenue CAGR. Give the percentage to one decimal place.
+
+Q2. Using the normalized management EBITDA series, calculate the change in EBITDA margin from FY25 to FY26 in percentage points. Then identify the largest expense-category increase associated with the deterioration.
+
+Q3. From the quarterly market-share data, identify the competitor with the largest FY24-Q1 to FY26-Q4 share gain. Give the change in percentage points.
+
+Q4. In the pricing matrix, identify the product category where Hyundai has its largest price premium versus the most aggressive competitor. Then identify the competitor launch event that overlaps with the relevant period.
+
+Q5. From the expenditure ledger, identify the spending category with the largest year-over-year increase in FY26 versus FY25. Give both years' totals and the percentage increase.
+
+Q6. Which capital project consumed the largest share of FY26 CAPEX? Calculate its percentage of total FY26 CAPEX.
+
+Q7. Trace one major payment from transaction to business purpose. Report: transaction ID, project code, vendor ID, PO number, supplier country, destination/site, and purpose.
+
+Q8. Which strategic investment has the largest expected-versus-actual ROI gap? Give expected ROI, actual ROI, and the gap in percentage points.
+
+Q9. Identify the operating site with the combination of low utilization and high inventory days. What share of the company's modeled FY26 production capacity does that site represent?
+
+Q10. Calculate the percentage of FY26 revenue contributed by the top five customers. Then identify which of those top-five customers has the highest service/churn risk.
+
+Q11. From the product/unit-economics files, identify the product family with the largest gap between gross margin and contribution margin. Give the two margins and explain which cost component creates the gap.
+
+Q12. FINAL WAR-ROOM ASSESSMENT: Identify three measurable structural weaknesses in the business. Each weakness must be supported by at least one numerical metric, and your evidence must span at least four files across at least three numbered folders. Present the evidence chain for each weakness.

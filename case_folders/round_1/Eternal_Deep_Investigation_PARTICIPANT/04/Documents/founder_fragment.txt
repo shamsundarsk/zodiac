@@ -1,0 +1,11 @@
+FOUNDER ARCHIVE FRAGMENT
+
+FIRST NAME: ARAVIND
+SURNAME CLUE: RAO
+
+EMPLOYEE ID: EMP-001
+BASE: Bengaluru, India
+REFERENCE: SITE-09
+SECONDARY: EXP-29
+
+The full founding record is in another folder.

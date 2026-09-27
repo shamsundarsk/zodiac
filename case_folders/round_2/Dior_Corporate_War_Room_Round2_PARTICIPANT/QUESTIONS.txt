@@ -1,0 +1,17 @@
+ROUND 2 - CORPORATE WAR ROOM
+
+Investigation brief: reconstruct performance, competition, capital allocation, operations and business risk from the archive.
+You are expected to calculate, reconcile and cross-reference. No single file is intended to answer a question by itself.
+
+1. Calculate the FY23-FY26 revenue CAGR from the internal financial model. Give the answer to one decimal place.
+2. From FY25 to FY26, by how many percentage points did normalized operating margin change? Which expenditure category had the largest absolute increase over the same period?
+3. Which competitor code gained the most market share across the quarterly market-share series from FY24-Q1 to FY26-Q4, and by how many percentage points?
+4. In FY26-Q3, which category shows the widest House A price premium against a tracked competitor, and which competitor launch event occurs in the same category?
+5. Calculate the percentage increase in Digital expenditure from FY25 to FY26. Identify the supporting project code that appears in the strategy material.
+6. Which strategic project consumed the largest share of strategic-project actual spend, and what percentage of the portfolio did it represent?
+7. Trace the specialist-equipment payment: identify the transaction ID, vendor, PO number, source country, project code and receiving site.
+8. Which strategic project has the largest expected-vs-actual ROI gap? State expected ROI, actual ROI and the gap in percentage points.
+9. Which site combines below-60% utilization with more than 60 work-in-process/inventory days? What percentage of the modeled total site capacity does it represent?
+10. What percentage of strategic-account revenue is contributed by the top five accounts, and which of the top five has the largest retention decline?
+11. Which category has the widest gross-to-contribution margin gap, and what are the component cost drivers shown in the unit-economics sheet?
+12. Produce three measurable business weaknesses supported by at least four files across at least three folders. For each weakness, provide one metric, its change/variance, and the evidence path. Do not use narrative-only claims.

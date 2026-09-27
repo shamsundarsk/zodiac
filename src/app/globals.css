@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-main: #000000;
+    --bg-card: #0A0A0C;
+    --bg-card-hover: #121216;
+    --border-main: #222228;
+    --border-highlight: #33333E;
+    --text-main: #FFFFFF;
+    --text-muted: #888888;
+    --accent-file: #D4C5A9;
+    --accent-file-hover: #E4D5B9;
+  }
+}
+
+body {
+  background-color: #000000;
+  color: #FFFFFF;
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  letter-spacing: -0.015em;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-mono {
+  font-family: var(--font-mono), monospace;
+}
+
+.font-zodiac {
+  font-family: var(--font-zodiac), 'Gloria Hallelujah', cursive;
+}
+
+/* Cryptic Dossier Grid Background */
+.bg-dossier-grid {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+}
+
+/* Custom Minimal Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: #222228;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #33333E;
+}
+
+/* High Contrast Noir Card System */
+.dossier-card {
+  background-color: #0A0A0C;
+  border: 1px solid #222228;
+  border-radius: 0.75rem;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dossier-card:hover {
+  border-color: #33333E;
+  background-color: #121216;
+}
+
+/* Form Inputs */
+input, select, textarea {
+  color: #FFFFFF;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #555555;
+}

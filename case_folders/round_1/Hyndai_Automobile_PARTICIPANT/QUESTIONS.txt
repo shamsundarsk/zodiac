@@ -1,0 +1,29 @@
+MYSTERY AUTOMOBILE — FINAL QUESTIONS
+
+The archive contains 9 numbered folders with 4 puzzle files in each folder.
+The folder numbers are NOT the order of investigation.
+
+Use repeated employee IDs, names, dates, locations, transaction references, purchase-order numbers,
+factory codes, vehicle/program names, shipment details and other matching clues.
+
+Some records are useful.
+Some are routine/noise.
+Exactly five puzzle files are empty.
+
+QUESTIONS
+
+1. What is the full name of the mystery company?
+2. Who is the founder / founding chairman identified through the personnel trail?
+3. What employee/founder ID connects that person to the transaction history?
+4. Which city and country are recorded as the founder's base?
+5. From which city and country did the traced founder-linked transaction originate?
+6. What was the exact amount of the traced transaction?
+7. What was the stated purpose of that transaction, and what two component categories were involved?
+8. What purchase-order number connects the powertrain procurement to the Indian manufacturing project?
+9. Which Indian manufacturing facility was the receiving destination, and what nearby city does the record identify?
+10. Which early vehicle program is linked to the engine/transmission trail?
+11. In what year was the mystery company established?
+12. What was the company's first car launched in India, and in what year was it launched?
+
+For every answer, record the evidence trail:
+Folder → File → Clue → Next Folder → Next File

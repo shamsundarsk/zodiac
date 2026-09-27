@@ -1,0 +1,30 @@
+MYSTERY INTERNET COMPANY — FINAL QUESTIONS
+
+You have 9 numbered folders with exactly 4 puzzle files in each folder.
+The folder numbers are NOT the investigation order.
+
+Search repeated employee IDs, names, dates, transaction IDs, amounts, purchase orders,
+project labels, locations, technical terms, product/service names and historical references.
+
+Exactly five puzzle files are empty.
+Some records are detailed; some are short; many ordinary records are noise.
+
+QUESTIONS
+
+1. What is the full legal name of the mystery company?
+2. Name all THREE founders.
+3. Which employee ID is attached to the founder whose record appears again in the finance trail?
+4. What city was the founder/startup team based in during the early office stage?
+5. What was the exact date of the traced fictional founder-linked transaction?
+6. What was the exact amount and currency of that transaction?
+7. What was the money used for, and which two infrastructure categories are named in the records?
+8. What purchase-order number connects the spending record to the infrastructure/procurement trail?
+9. What placeholder project name was used before the final company name was chosen?
+10. What public network/service clue uses the pair of IP addresses 1.1.1.1 and 1.0.0.1?
+11. On what date did the company publicly launch?
+12. What is the current San Francisco headquarters address recorded in the corporate trail?
+
+For every answer, write:
+Folder → File → clue → next Folder → next File
+
+The company's name is intentionally NOT written anywhere in the participant archive.
