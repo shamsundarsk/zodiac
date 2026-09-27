@@ -11,7 +11,7 @@ interface RoundTimerProps {
 
 export const RoundTimer: React.FC<RoundTimerProps> = ({ eventState, roundNumber }) => {
   const [timeLeftSec, setTimeLeftSec] = useState<number>(1800);
-  const [prize, setPrize] = useState<number>(eventState.starting_prize || EVENT_CONFIG.STARTING_PRIZE);
+  const [prize, setPrize] = useState<number>(eventState?.starting_prize || EVENT_CONFIG.STARTING_PRIZE);
 
   useEffect(() => {
     const updateTimer = () => {
@@ -96,7 +96,7 @@ export const RoundTimer: React.FC<RoundTimerProps> = ({ eventState, roundNumber 
           <div className="flex flex-col">
             <span className="text-[9px] text-[#8B9099] leading-none uppercase font-semibold">PRIZE POOL</span>
             <span className="text-lg font-bold leading-tight tracking-wide">
-              ₹{prize.toLocaleString('en-IN')}
+              ₹{(prize ?? EVENT_CONFIG.STARTING_PRIZE).toLocaleString('en-IN')}
             </span>
           </div>
         </div>

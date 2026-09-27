@@ -245,7 +245,7 @@ export default function AdminDashboardPage() {
             <span className="text-[10px] font-mono text-zinc-400 uppercase">CURRENT PRIZE POOL</span>
             <div className="text-2xl font-black font-mono text-white mt-1 flex items-center gap-1">
               <IndianRupee className="w-5 h-5" />
-              {eventState.current_prize.toLocaleString('en-IN')}
+              {(eventState?.current_prize ?? 0).toLocaleString('en-IN')}
             </div>
             <p className="text-xs text-zinc-400 mt-2 font-mono">Starts ₹2,000 → ₹0</p>
           </div>
@@ -433,7 +433,7 @@ export default function AdminDashboardPage() {
                         </span>
                       </td>
                       <td className="p-3 font-bold text-white">
-                        {item.final_prize !== null ? `₹${item.final_prize.toLocaleString('en-IN')}` : '—'}
+                        {(item.final_prize !== null && item.final_prize !== undefined) ? `₹${Number(item.final_prize).toLocaleString('en-IN')}` : '—'}
                       </td>
                       <td className="p-3 text-center">
                         <button

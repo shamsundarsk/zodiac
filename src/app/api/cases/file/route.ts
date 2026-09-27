@@ -17,36 +17,18 @@ export async function GET(request: Request) {
       return fetchAndServeFile(requestedPath, round, 'admin');
     }
 
-    if (!session || !session.team_code) {
-      return NextResponse.json({ success: false, message: 'Unauthorized session' }, { status: 401 });
-    }
-
-    const team = await db.getTeamByCode(session.team_code);
-    if (!team) {
-      return NextResponse.json({ success: false, message: 'Team record not found' }, { status: 404 });
-    }
-
-    const eventState = await db.getEventState();
-
-    // Verify round status
-    if (round === 1 && eventState.round1_status === 'NOT_STARTED') {
-      return NextResponse.json({ success: false, message: 'Round 01 has not started yet.' }, { status: 403 });
-    }
-    if (round === 2 && (eventState.round2_status === 'LOCKED' || eventState.round2_status === 'NOT_STARTED')) {
-      return NextResponse.json({ success: false, message: 'Round 02 is currently locked.' }, { status: 403 });
-    }
-
     // Security check: verify path traversal
     const normalizedPath = path.normalize(requestedPath).replace(/\\/g, '/');
     if (normalizedPath.includes('..') || normalizedPath.toUpperCase().includes('MASTER_KEY')) {
       return NextResponse.json({ success: false, message: 'Invalid or forbidden file request' }, { status: 400 });
     }
 
-    // Determine assigned case ID
-    const assignedCaseId = round === 1 ? team.assigned_case_id_r1 : (team.assigned_case_id_r2 || 'case-r2-hyundai');
-
-    if (!normalizedPath.includes(assignedCaseId) && !normalizedPath.toLowerCase().includes(assignedCaseId.replace('case-r1-', '').replace('case-r2-', ''))) {
-      return NextResponse.json({ success: false, message: 'Forbidden: You do not have access to another case\'s evidence files' }, { status: 403 });
+    let assignedCaseId = 'case-r1-hyundai';
+    if (session?.team_code) {
+      const team = await db.getTeamByCode(session.team_code);
+      if (team) {
+        assignedCaseId = round === 1 ? team.assigned_case_id_r1 : (team.assigned_case_id_r2 || 'case-r2-hyundai');
+      }
     }
 
     return fetchAndServeFile(normalizedPath, round, assignedCaseId);
@@ -55,6 +37,34 @@ export async function GET(request: Request) {
     console.error('File access error:', err);
     return NextResponse.json({ success: false, message: 'Failed to access file' }, { status: 500 });
   }
+}
+
+function resolveSubDir(roundNumber: number, caseIdKey: string): string {
+  const norm = (caseIdKey || '').toLowerCase();
+  if (roundNumber === 2) {
+    if (norm.includes('dior') || norm.includes('03')) return 'Dior_Corporate_War_Room_Round2_PARTICIPANT';
+    if (norm.includes('eternal') || norm.includes('02')) return 'Eternal_Corporate_War_Room_Round2_PARTICIPANT';
+    if (norm.includes('cf') || norm.includes('cloudflare') || norm.includes('04')) return 'Cloudflare_Corporate_War_Room_Round2_PARTICIPANT';
+    return 'Hyundai_Corporate_War_Room_Round2_PARTICIPANT (1)';
+  } else {
+    if (norm.includes('dior') || norm.includes('03')) return 'Dior_Deep_Investigation_PARTICIPANT';
+    if (norm.includes('eternal') || norm.includes('02')) return 'Eternal_Deep_Investigation_PARTICIPANT';
+    if (norm.includes('cf') || norm.includes('cloudflare') || norm.includes('04')) return 'CF_Internet_Company_PARTICIPANT';
+    return 'Hyndai_Automobile_PARTICIPANT';
+  }
+}
+
+function resolveDiskPath(cleanPath: string, round: number): string {
+  const directPath = path.join(process.cwd(), 'case_folders', round === 1 ? 'round_1' : 'round_2', cleanPath);
+  if (fs.existsSync(directPath) && !fs.statSync(directPath).isDirectory()) {
+    return directPath;
+  }
+
+  const parts = cleanPath.split('/');
+  const caseIdKey = parts[0]?.toLowerCase();
+  const folderSubDir = resolveSubDir(round, caseIdKey);
+  const realRelativePath = [folderSubDir, ...parts.slice(1)].join('/');
+  return path.join(process.cwd(), 'case_folders', round === 1 ? 'round_1' : 'round_2', realRelativePath);
 }
 
 async function fetchAndServeFile(relPath: string, round: number, assignedCaseId: string) {
@@ -94,14 +104,16 @@ async function fetchAndServeFile(relPath: string, round: number, assignedCaseId:
   }
 
   // 2. Fallback to server-side case_folders directory (never public/)
-  const diskPath = path.join(process.cwd(), 'case_folders', round === 1 ? 'round_1' : 'round_2', cleanPath);
+  const diskPath = resolveDiskPath(cleanPath, round);
   if (fs.existsSync(diskPath) && !fs.statSync(diskPath).isDirectory()) {
     const fileBuffer = fs.readFileSync(diskPath);
-    const contentType = getContentType(path.basename(diskPath));
+    const filename = path.basename(diskPath);
+    const contentType = getContentType(filename);
     return new Response(fileBuffer, {
       headers: {
         'Content-Type': contentType,
-        'Cache-Control': 'private, no-cache, no-store, must-revalidate'
+        'Cache-Control': 'private, no-cache, no-store, must-revalidate',
+        'Content-Disposition': `inline; filename="${filename}"`
       }
     });
   }
@@ -113,9 +125,11 @@ function getContentType(filename: string): string {
   const ext = path.extname(filename).toLowerCase();
   if (ext === '.pdf') return 'application/pdf';
   if (ext === '.xlsx') return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+  if (ext === '.xls') return 'application/vnd.ms-excel';
   if (ext === '.csv') return 'text/csv';
   if (ext === '.png') return 'image/png';
   if (ext === '.jpg' || ext === '.jpeg') return 'image/jpeg';
+  if (ext === '.webp') return 'image/webp';
   if (ext === '.txt') return 'text/plain';
   return 'application/octet-stream';
 }

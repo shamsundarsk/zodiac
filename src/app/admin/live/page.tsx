@@ -123,7 +123,7 @@ export default function ProjectionLiveScreenPage() {
               <IndianRupee className="w-3.5 h-3.5 text-white" /> PRIZE POOL
             </span>
             <span className="text-3xl sm:text-4xl font-black tracking-tighter text-white font-mono mt-1">
-              ₹{currentPrize.toLocaleString('en-IN')}
+              ₹{(currentPrize ?? 0).toLocaleString('en-IN')}
             </span>
           </div>
 
@@ -204,7 +204,7 @@ export default function ProjectionLiveScreenPage() {
                       </span>
                     </td>
                     <td className="p-3.5 text-right font-black text-lg sm:text-xl text-white">
-                      {item.final_prize !== null ? `₹${item.final_prize.toLocaleString('en-IN')}` : '--'}
+                      {(item.final_prize !== null && item.final_prize !== undefined) ? `₹${Number(item.final_prize).toLocaleString('en-IN')}` : '--'}
                     </td>
                   </tr>
                 ))

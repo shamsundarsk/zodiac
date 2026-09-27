@@ -30,6 +30,7 @@ export interface EvidenceFile {
   data_json?: any; // For spreadsheets/tables
   content?: string; // For text/PDF content
   image_url?: string; // For images
+  file_url?: string; // For direct stream/download URL
 }
 
 export interface CaseFolder {

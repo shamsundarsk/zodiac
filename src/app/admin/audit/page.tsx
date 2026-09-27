@@ -29,9 +29,9 @@ export default function AdminAuditLogsPage() {
   }, []);
 
   const filteredLogs = logs.filter(log =>
-    log.team_code.toLowerCase().includes(filterTeam.toLowerCase()) ||
-    log.action.toLowerCase().includes(filterTeam.toLowerCase()) ||
-    log.details.toLowerCase().includes(filterTeam.toLowerCase())
+    (log.team_code || '').toLowerCase().includes(filterTeam.toLowerCase()) ||
+    (log.action || '').toLowerCase().includes(filterTeam.toLowerCase()) ||
+    (log.details || '').toLowerCase().includes(filterTeam.toLowerCase())
   );
 
   return (

@@ -7,15 +7,10 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const round = Number(searchParams.get('round') || '1') as 1 | 2;
   const requestedTeamCode = searchParams.get('team_code');
-
-  if (requestedTeamCode && session?.role !== 'ADMIN') {
-    if (!session || session.team_code.toLowerCase() !== requestedTeamCode.toLowerCase()) {
-      return NextResponse.json({ success: false, message: 'Forbidden: Cannot access another team\'s assigned case' }, { status: 403 });
-    }
-  }
+  const requestedCaseId = searchParams.get('case_id');
 
   const activeTeamCode = session?.team_code || requestedTeamCode || '';
-  const folders = await db.getFolders(round, activeTeamCode);
+  const folders = await db.getFolders(round, activeTeamCode, requestedCaseId || undefined);
 
   let caseConfig = await db.getCaseByRound(round);
   if (activeTeamCode) {

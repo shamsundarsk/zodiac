@@ -314,26 +314,32 @@ export const db = {
     return file;
   },
 
-  async getFolders(roundNumber: 1 | 2 = 1, teamCode?: string): Promise<CaseFolder[]> {
-    let targetCaseId = "";
-    if (teamCode) {
+  async getFolders(roundNumber: 1 | 2 = 1, teamCode?: string, caseId?: string): Promise<CaseFolder[]> {
+    let targetCaseId = caseId || "";
+    if (!targetCaseId && teamCode) {
       const team = await this.getTeamByCode(teamCode);
       if (team) {
         targetCaseId = roundNumber === 1 ? team.assigned_case_id_r1 : (team.assigned_case_id_r2 || "case-r2-hyundai");
       }
     }
 
-    if (!targetCaseId) {
-      targetCaseId = roundNumber === 1 ? "case-r1-hyundai" : "case-r2-hyundai";
+    if (targetCaseId) {
+      const actualFolders = loadActualParticipantCaseFolders(roundNumber, targetCaseId);
+      if (actualFolders.length > 0) {
+        return actualFolders;
+      }
     }
 
-    const actualFolders = loadActualParticipantCaseFolders(roundNumber, targetCaseId);
-    if (actualFolders.length > 0) {
-      return actualFolders;
-    }
+    const caseIds = roundNumber === 1
+      ? ['case-r1-hyundai', 'case-r1-eternal', 'case-r1-dior', 'case-r1-cf']
+      : ['case-r2-hyundai', 'case-r2-eternal', 'case-r2-dior', 'case-r2-cloudflare'];
 
-    const allFolders = getAllInitialFolders();
-    return allFolders.filter(f => f.case_id === targetCaseId);
+    let allRoundFolders: CaseFolder[] = [];
+    for (const cId of caseIds) {
+      const flds = loadActualParticipantCaseFolders(roundNumber, cId);
+      allRoundFolders = [...allRoundFolders, ...flds];
+    }
+    return allRoundFolders;
   },
 
   async getSubmissions(): Promise<Submission[]> {
