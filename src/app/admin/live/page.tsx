@@ -60,14 +60,29 @@ export default function ProjectionLiveScreenPage() {
   const activeRound = eventState?.round2_status === 'ACTIVE' || eventState?.round2_status === 'ENDED' ? 2 : 1;
 
   // Timer math
+  const status = activeRound === 1 ? eventState?.round1_status : eventState?.round2_status;
   const startTime = activeRound === 1 ? eventState?.round1_start_time : eventState?.round2_start_time;
+  const endsAt = activeRound === 1 ? eventState?.round1_ends_at : eventState?.round2_ends_at;
   const durationMins = activeRound === 1 ? eventState?.round1_duration_mins : eventState?.round2_duration_mins;
   const totalSec = (durationMins || 30) * 60;
   
   let remainingSec = totalSec;
-  if (startTime) {
-    const elapsedSec = Math.max(0, (Date.now() - new Date(startTime).getTime()) / 1000);
-    remainingSec = Math.max(0, Math.floor(totalSec - elapsedSec));
+  if (status === 'ENDED') {
+    remainingSec = 0;
+  } else if (status === 'ACTIVE') {
+    const serverOffsetMs = eventState?.server_now
+      ? new Date(eventState.server_now).getTime() - Date.now()
+      : 0;
+    const currentEstimatedServerNowMs = Date.now() + serverOffsetMs;
+
+    if (endsAt) {
+      const endsAtMs = new Date(endsAt).getTime();
+      remainingSec = Math.max(0, Math.floor((endsAtMs - currentEstimatedServerNowMs) / 1000));
+    } else if (startTime) {
+      const startTimeMs = new Date(startTime).getTime();
+      const elapsedSec = Math.max(0, (currentEstimatedServerNowMs - startTimeMs) / 1000);
+      remainingSec = Math.max(0, Math.floor(totalSec - elapsedSec));
+    }
   }
 
   const minutes = Math.floor(remainingSec / 60);

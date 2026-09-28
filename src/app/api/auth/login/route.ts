@@ -14,10 +14,18 @@ export async function POST(request: Request) {
         const token = createSessionToken({ team_code: 'ADMIN', role: 'ADMIN' });
         const cookieHeader = buildSessionCookieHeader(token);
 
+        const isProd = process.env.NODE_ENV === 'production';
         const res = NextResponse.json({
           success: true,
           role: 'ADMIN',
           token
+        });
+        res.cookies.set('zodiac_session', token, {
+          path: '/',
+          httpOnly: true,
+          secure: isProd,
+          sameSite: 'lax',
+          maxAge: 86400
         });
         res.headers.append('Set-Cookie', cookieHeader);
         return res;
@@ -41,6 +49,7 @@ export async function POST(request: Request) {
     const token = createSessionToken({ team_code: team.team_code, role: 'PARTICIPANT' });
     const cookieHeader = buildSessionCookieHeader(token);
 
+    const isProd = process.env.NODE_ENV === 'production';
     const res = NextResponse.json({
       success: true,
       role: 'PARTICIPANT',
@@ -58,6 +67,13 @@ export async function POST(request: Request) {
       }
     });
 
+    res.cookies.set('zodiac_session', token, {
+      path: '/',
+      httpOnly: true,
+      secure: isProd,
+      sameSite: 'lax',
+      maxAge: 86400
+    });
     res.headers.append('Set-Cookie', cookieHeader);
     return res;
 

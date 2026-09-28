@@ -37,6 +37,9 @@ export default function ParticipantLoginPage() {
       }
 
       // Store team authentication in sessionStorage
+      if (data.token) {
+        sessionStorage.setItem('zodiac_token', data.token);
+      }
       sessionStorage.setItem('casefiles_team', JSON.stringify(data.team));
       router.push('/dashboard');
 

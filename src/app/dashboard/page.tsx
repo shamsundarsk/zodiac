@@ -91,6 +91,15 @@ export default function ParticipantDashboard() {
     });
   };
 
+  const getAuthHeaders = (extraHeaders?: Record<string, string>) => {
+    const token = typeof window !== 'undefined' ? sessionStorage.getItem('zodiac_token') : null;
+    const headers: Record<string, string> = { 'Cache-Control': 'no-store', ...(extraHeaders || {}) };
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    return headers;
+  };
+
   // Initialize team & Realtime SSE Stream
   useEffect(() => {
     const cachedTeam = sessionStorage.getItem('casefiles_team');
@@ -116,12 +125,12 @@ export default function ParticipantDashboard() {
     // Fetch initial state & folders for assigned case
     const initData = async () => {
       try {
-        const stateRes = await fetch('/api/event/status', { cache: 'no-store' });
+        const stateRes = await fetch('/api/event/status', { headers: getAuthHeaders() });
         const stateData = await stateRes.json();
         if (stateData.state) setEventState(stateData.state);
 
         const currentRound = stateData.state?.round2_status === 'ACTIVE' ? 2 : 1;
-        const foldersRes = await fetch(`/api/cases?round=${currentRound}&team_code=${teamObj.team_code}`, { cache: 'no-store' });
+        const foldersRes = await fetch(`/api/cases?round=${currentRound}&team_code=${teamObj.team_code}`, { headers: getAuthHeaders() });
         const foldersData = await foldersRes.json();
         if (foldersData.folders) {
           setFolders(foldersData.folders);
@@ -171,6 +180,8 @@ export default function ParticipantDashboard() {
 
   // Handle active round changes dynamically
   const activeRound = eventState?.round2_status === 'ACTIVE' || eventState?.round2_status === 'ENDED' ? 2 : 1;
+  const round1Status = eventState?.round1_status;
+  const round2Status = eventState?.round2_status;
 
   useEffect(() => {
     if (!team) return;
@@ -180,8 +191,8 @@ export default function ParticipantDashboard() {
       setQuestions([]);
       try {
         const [foldersRes, questionsRes] = await Promise.all([
-          fetch(`/api/cases?round=${activeRound}&team_code=${team.team_code}`, { cache: 'no-store' }),
-          fetch(`/api/questions?round=${activeRound}`, { cache: 'no-store' })
+          fetch(`/api/cases?round=${activeRound}&team_code=${team.team_code}`, { headers: getAuthHeaders() }),
+          fetch(`/api/questions?round=${activeRound}`, { headers: getAuthHeaders() })
         ]);
 
         const foldersData = await foldersRes.json();
@@ -220,7 +231,7 @@ export default function ParticipantDashboard() {
       }
     };
     fetchRoundData();
-  }, [activeRound, team]);
+  }, [activeRound, team, round1Status, round2Status]);
 
 
   // Handle Scratchpad Note Saving
@@ -241,7 +252,7 @@ export default function ParticipantDashboard() {
     try {
       const res = await fetch('/api/submissions', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({
           team_code: team.team_code,
           round_number: 1,
@@ -272,7 +283,7 @@ export default function ParticipantDashboard() {
     try {
       const res = await fetch('/api/submissions', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({
           team_code: team.team_code,
           round_number: 2,
@@ -300,6 +311,7 @@ export default function ParticipantDashboard() {
 
   const handleLogout = () => {
     sessionStorage.removeItem('casefiles_team');
+    sessionStorage.removeItem('zodiac_token');
     router.push('/login');
   };
 
@@ -480,7 +492,7 @@ export default function ParticipantDashboard() {
                 onChange={(e) => handleScratchpadChange(e.target.value)}
                 placeholder="Scratchpad note canvas... Paste raw ASCII numbers (e.g. 65 116 104 -> Ather) or Hex strings here while decoding evidence files..."
                 rows={3}
-                className="w-full bg-[#FAF9F5] border border-zinc-300 p-2.5 text-xs font-mono text-black placeholder-zinc-400 focus:outline-none focus:border-black resize-y"
+                className="answer-input w-full border border-zinc-300 p-2.5 text-xs font-mono focus:outline-none focus:border-black resize-y"
               />
               <div className="mt-2 flex justify-between items-center text-[10px] text-zinc-600">
                 <span>Notes persist automatically across folder clicks</span>
@@ -539,7 +551,7 @@ export default function ParticipantDashboard() {
                             value={r1Answers[q.id] || ''}
                             onChange={(e) => handleR1AnswerChange(q.id, e.target.value)}
                             placeholder={q.placeholder || `Enter finding for Q${q.num || idx + 1}...`}
-                            className="w-full bg-white border-2 border-black px-3 py-2 text-xs font-mono text-black font-bold placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-black"
+                            className="answer-input w-full border-2 border-black px-3 py-2 text-xs font-mono font-bold focus:outline-none focus:ring-2 focus:ring-black"
                           />
                         ) : (
                           <input
@@ -547,7 +559,7 @@ export default function ParticipantDashboard() {
                             value={r1Answers[q.id] || ''}
                             onChange={(e) => handleR1AnswerChange(q.id, e.target.value)}
                             placeholder={q.placeholder || `Enter finding for Q${q.num || idx + 1}...`}
-                            className="w-full bg-white border-2 border-black px-3 py-2 text-xs font-mono text-black font-bold placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-black"
+                            className="answer-input w-full border-2 border-black px-3 py-2 text-xs font-mono font-bold focus:outline-none focus:ring-2 focus:ring-black"
                           />
                         )}
                       </div>
@@ -674,7 +686,7 @@ export default function ParticipantDashboard() {
                                   value={r2Answers[qKey] || ''}
                                   onChange={(e) => handleR2AnswerChange(qKey, e.target.value)}
                                   placeholder={q.placeholder || 'e.g. 5.5'}
-                                  className="w-40 bg-white border-2 border-black px-3 py-1.5 text-xs font-mono font-bold text-black focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-50"
+                                  className="answer-input w-40 border-2 border-black px-3 py-1.5 text-xs font-mono font-bold focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-50"
                                 />
                                 <span className="font-mono font-black text-sm text-black">%</span>
                               </div>
@@ -688,7 +700,7 @@ export default function ParticipantDashboard() {
                                   value={r2Answers[qKey] || ''}
                                   onChange={(e) => handleR2AnswerChange(qKey, e.target.value)}
                                   placeholder={q.placeholder || 'e.g. 0.79'}
-                                  className="w-40 bg-white border-2 border-black px-3 py-1.5 text-xs font-mono font-bold text-black focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-50"
+                                  className="answer-input w-40 border-2 border-black px-3 py-1.5 text-xs font-mono font-bold focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-50"
                                 />
                                 {q.unit && <span className="font-mono font-bold text-xs text-black">{q.unit}</span>}
                               </div>
@@ -703,7 +715,7 @@ export default function ParticipantDashboard() {
                                   value={r2Answers[qKey] || ''}
                                   onChange={(e) => handleR2AnswerChange(qKey, e.target.value)}
                                   placeholder={q.placeholder || 'Amount...'}
-                                  className="w-48 bg-white border-2 border-black px-3 py-1.5 text-xs font-mono font-bold text-black focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-50"
+                                  className="answer-input w-48 border-2 border-black px-3 py-1.5 text-xs font-mono font-bold focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-50"
                                 />
                               </div>
                             )}
@@ -716,7 +728,7 @@ export default function ParticipantDashboard() {
                                   value={r2Answers[qKey] || ''}
                                   onChange={(e) => handleR2AnswerChange(qKey, e.target.value.toUpperCase())}
                                   placeholder={q.placeholder || 'e.g. TLE-02'}
-                                  className="w-48 uppercase bg-white border-2 border-black px-3 py-1.5 text-xs font-mono font-bold text-black focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-50 tracking-wider"
+                                  className="answer-input w-48 uppercase border-2 border-black px-3 py-1.5 text-xs font-mono font-bold focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-50 tracking-wider"
                                 />
                               </div>
                             )}
@@ -729,7 +741,7 @@ export default function ParticipantDashboard() {
                                   value={r2Answers[qKey] || ''}
                                   onChange={(e) => handleR2AnswerChange(qKey, e.target.value)}
                                   placeholder={q.placeholder || 'Short answer...'}
-                                  className="w-full max-w-xs bg-white border-2 border-black px-3 py-1.5 text-xs font-mono font-bold text-black focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-50"
+                                  className="answer-input w-full max-w-xs border-2 border-black px-3 py-1.5 text-xs font-mono font-bold focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-50"
                                 />
                               </div>
                             )}
@@ -770,7 +782,7 @@ export default function ParticipantDashboard() {
                                     value={r2Answers[`${qKey}_evidence`] || ''}
                                     onChange={(e) => handleR2AnswerChange(`${qKey}_evidence`, e.target.value)}
                                     placeholder="Optional short evidence quote..."
-                                    className="w-full bg-[#FAF9F5] border border-zinc-400 p-2 text-xs font-mono text-black focus:outline-none focus:border-black"
+                                    className="answer-input w-full border border-zinc-400 p-2 text-xs font-mono focus:outline-none focus:border-black"
                                   />
                                 </div>
                               </div>
@@ -784,7 +796,7 @@ export default function ParticipantDashboard() {
                                   value={r2Answers[qKey] || ''}
                                   onChange={(e) => handleR2AnswerChange(qKey, e.target.value)}
                                   placeholder={q.placeholder || 'Answer...'}
-                                  className="w-full bg-white border-2 border-black px-3 py-2 text-xs font-mono text-black font-bold placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-50"
+                                  className="answer-input w-full border-2 border-black px-3 py-2 text-xs font-mono font-bold focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-50"
                                 />
                               </div>
                             )}

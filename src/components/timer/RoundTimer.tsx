@@ -15,8 +15,11 @@ export const RoundTimer: React.FC<RoundTimerProps> = ({ eventState, roundNumber 
 
   useEffect(() => {
     const updateTimer = () => {
+      if (!eventState) return;
+
       const status = roundNumber === 1 ? eventState.round1_status : eventState.round2_status;
       const startTime = roundNumber === 1 ? eventState.round1_start_time : eventState.round2_start_time;
+      const endsAt = roundNumber === 1 ? eventState.round1_ends_at : eventState.round2_ends_at;
       const durationMins = roundNumber === 1 ? eventState.round1_duration_mins : eventState.round2_duration_mins;
       const pausedSec = roundNumber === 1 ? (eventState.round1_paused_elapsed_sec || 0) : (eventState.round2_paused_elapsed_sec || 0);
       const totalSec = (durationMins || 30) * 60;
@@ -25,6 +28,12 @@ export const RoundTimer: React.FC<RoundTimerProps> = ({ eventState, roundNumber 
       if (status === 'NOT_STARTED' || status === 'LOCKED') {
         setTimeLeftSec(totalSec);
         setPrize(basePrize);
+        return;
+      }
+
+      if (status === 'ENDED') {
+        setTimeLeftSec(0);
+        setPrize(0);
         return;
       }
 
@@ -38,17 +47,27 @@ export const RoundTimer: React.FC<RoundTimerProps> = ({ eventState, roundNumber 
         return;
       }
 
-      let elapsedSec = pausedSec;
-      if (status === 'ACTIVE' && startTime) {
-        const activeWindow = Math.max(0, (Date.now() - new Date(startTime).getTime()) / 1000);
-        elapsedSec += activeWindow;
+      // ACTIVE status: calculate server-authoritative remaining time
+      let remainingSec = totalSec;
+
+      const serverOffsetMs = eventState.server_now
+        ? new Date(eventState.server_now).getTime() - Date.now()
+        : 0;
+      const currentEstimatedServerNowMs = Date.now() + serverOffsetMs;
+
+      if (endsAt) {
+        const endsAtMs = new Date(endsAt).getTime();
+        remainingSec = Math.max(0, Math.floor((endsAtMs - currentEstimatedServerNowMs) / 1000));
+      } else if (startTime) {
+        const startTimeMs = new Date(startTime).getTime();
+        const elapsedSec = Math.max(0, (currentEstimatedServerNowMs - startTimeMs) / 1000) + pausedSec;
+        remainingSec = Math.max(0, Math.floor(totalSec - elapsedSec));
       }
 
-      const remainingSec = Math.max(0, Math.floor(totalSec - elapsedSec));
       setTimeLeftSec(remainingSec);
 
       if (roundNumber === 2) {
-        const ratio = remainingSec / totalSec;
+        const ratio = totalSec > 0 ? remainingSec / totalSec : 0;
         const currentPrizeCalculated = Math.max(0, Math.round(basePrize * ratio));
         setPrize(currentPrizeCalculated);
       }

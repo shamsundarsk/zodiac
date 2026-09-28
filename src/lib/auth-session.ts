@@ -75,22 +75,37 @@ export function verifySessionToken(token: string): AuthPayload | null {
 }
 
 export async function getAuthSession(request?: Request): Promise<AuthPayload | null> {
-  // Check Authorization header first
   if (request) {
+    // 1. Check Authorization header
     const authHeader = request.headers.get('Authorization');
     if (authHeader && authHeader.startsWith('Bearer ')) {
       const token = authHeader.substring(7);
       const session = verifySessionToken(token);
       if (session) return session;
     }
+
+    // 2. Check Cookie header directly on the request
+    const cookieHeader = request.headers.get('cookie');
+    if (cookieHeader) {
+      const match = cookieHeader.match(new RegExp(`(?:^|;\\s*)${COOKIE_NAME}=([^;]+)`));
+      if (match && match[1]) {
+        const session = verifySessionToken(match[1]);
+        if (session) return session;
+      }
+    }
   }
 
-  // Fall back to HTTP-only cookie
-  const cookieStore = await cookies();
-  const cookie = cookieStore.get(COOKIE_NAME);
-  if (!cookie || !cookie.value) return null;
+  // 3. Fall back to Next.js cookies store
+  try {
+    const cookieStore = await cookies();
+    const cookie = cookieStore.get(COOKIE_NAME);
+    if (cookie && cookie.value) {
+      const session = verifySessionToken(cookie.value);
+      if (session) return session;
+    }
+  } catch (err) {}
 
-  return verifySessionToken(cookie.value);
+  return null;
 }
 
 export async function getAdminAuthSession(request?: Request): Promise<AuthPayload | null> {

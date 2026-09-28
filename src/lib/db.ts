@@ -29,10 +29,12 @@ const INITIAL_EVENT_STATE: EventState = {
   id: "evt-001",
   round1_status: "NOT_STARTED",
   round1_start_time: null,
+  round1_ends_at: null,
   round1_duration_mins: EVENT_CONFIG.ROUND_DURATION_MINS,
   round1_paused_elapsed_sec: 0,
   round2_status: "LOCKED" as any,
   round2_start_time: null,
+  round2_ends_at: null,
   round2_duration_mins: EVENT_CONFIG.ROUND_DURATION_MINS,
   round2_paused_elapsed_sec: 0,
   starting_prize: EVENT_CONFIG.STARTING_PRIZE,
@@ -120,24 +122,44 @@ function saveData(data: SchemaData) {
 
 export const db = {
   async getEventState(): Promise<EventState> {
+    let state: EventState;
+
     if (isSupabaseConfigured && supabaseAdmin) {
       const { data, error } = await supabaseAdmin.from('event_state').select('*').single();
       if (data && !error) {
-        const state = data as EventState;
-        return this.calculateLivePrize(state);
-      }
-      if (process.env.NODE_ENV === 'production') {
+        state = data as EventState;
+      } else if (process.env.NODE_ENV === 'production') {
         throw new Error(`Supabase query failed for event_state: ${error?.message}`);
+      } else {
+        const fileData = loadData();
+        state = fileData.eventState;
       }
+    } else {
+      const fileData = loadData();
+      state = fileData.eventState;
     }
 
-    const data = loadData();
-    const liveState = this.calculateLivePrize(data.eventState);
-    if (liveState.current_prize !== data.eventState.current_prize) {
-      data.eventState = liveState;
-      saveData(data);
+    state = this.calculateLivePrize(state);
+
+    if (state.round1_start_time && !state.round1_ends_at) {
+      const dur = (state.round1_duration_mins || EVENT_CONFIG.ROUND_DURATION_MINS) * 60 * 1000;
+      state.round1_ends_at = new Date(new Date(state.round1_start_time).getTime() + dur).toISOString();
     }
-    return liveState;
+    if (state.round2_start_time && !state.round2_ends_at) {
+      const dur = (state.round2_duration_mins || EVENT_CONFIG.ROUND_DURATION_MINS) * 60 * 1000;
+      state.round2_ends_at = new Date(new Date(state.round2_start_time).getTime() + dur).toISOString();
+    }
+
+    // Auto-end rounds if current server time >= round_ends_at
+    const now = Date.now();
+    if (state.round1_status === 'ACTIVE' && state.round1_ends_at && now >= new Date(state.round1_ends_at).getTime()) {
+      return await this.updateEventState({ round1_status: 'ENDED' });
+    }
+    if (state.round2_status === 'ACTIVE' && state.round2_ends_at && now >= new Date(state.round2_ends_at).getTime()) {
+      return await this.updateEventState({ round2_status: 'ENDED', current_prize: 0 });
+    }
+
+    return state;
   },
 
   calculateLivePrize(state: EventState): EventState {
@@ -173,8 +195,9 @@ export const db = {
 
   async updateEventState(updates: Partial<EventState>): Promise<EventState> {
     if (isSupabaseConfigured && supabaseAdmin) {
+      const { round1_ends_at, round2_ends_at, server_now, ...supabasePayload } = updates;
       const payload = {
-        ...updates,
+        ...supabasePayload,
         updated_at: new Date().toISOString()
       };
       const { data: existingRows } = await supabaseAdmin.from('event_state').select('id').limit(1);

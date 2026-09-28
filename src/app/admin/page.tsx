@@ -27,6 +27,7 @@ import {
   CheckSquare,
   Award
 } from 'lucide-react';
+import { RoundTimer } from '@/components/timer/RoundTimer';
 
 interface LeaderboardItem {
   rank: number;
@@ -246,6 +247,7 @@ export default function AdminDashboardPage() {
         </div>
 
         <div className="flex items-center gap-3">
+          <RoundTimer eventState={eventState} roundNumber={eventState.round2_status === 'ACTIVE' || eventState.round2_status === 'ENDED' ? 2 : 1} />
           <button
             onClick={handleOpenAnswerKeys}
             className="px-3.5 py-1.5 bg-emerald-950 border border-emerald-700 text-emerald-300 hover:text-white font-mono text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer"

@@ -67,11 +67,31 @@ body {
   background-color: #121216;
 }
 
-/* Form Inputs */
+/* Form Inputs Base */
 input, select, textarea {
-  color: #FFFFFF;
+  color: inherit;
+  caret-color: auto;
 }
 
 input::placeholder, textarea::placeholder {
-  color: #555555;
+  color: #777777;
+}
+
+/* Explicit high-contrast answer input class for participant dashboard canvas */
+.answer-input {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  caret-color: #000000 !important;
+  background-color: #ffffff !important;
+}
+
+.answer-input::placeholder {
+  color: #666666 !important;
+  -webkit-text-fill-color: #666666 !important;
+  opacity: 1 !important;
+}
+
+.answer-input:disabled {
+  background-color: #f0f0f0 !important;
+  opacity: 0.7 !important;
 }

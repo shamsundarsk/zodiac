@@ -86,15 +86,18 @@ export interface EventState {
   id: string;
   round1_status: RoundStatus;
   round1_start_time: string | null;
+  round1_ends_at?: string | null;
   round1_duration_mins: number;
   round1_paused_elapsed_sec?: number;
   round2_status: RoundStatus;
   round2_start_time: string | null;
+  round2_ends_at?: string | null;
   round2_duration_mins: number;
   round2_paused_elapsed_sec?: number;
   starting_prize: number;
   current_prize: number;
   updated_at: string;
+  server_now?: string;
 }
 
 export interface Submission {
